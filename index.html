@@ -1,88 +1,1060 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orderic Barnor | Full-Stack Dev & Builder</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .gradient-text { background: linear-gradient(to right, #2563eb, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orderic BARNOR — Digital Solutions Partner</title>
+  <meta name="description" content="I help businesses ship better digital products — faster. Technical partner, React/Node architect, WordPress expert. Remote worldwide." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#080808;--bg2:#0d0d0d;--bg3:#131313;--surface:#161616;
+      --border:rgba(201,168,76,0.13);--gold:#c9a84c;--gold-lt:#e8c97a;
+      --gold-dim:rgba(201,168,76,0.07);--text:#e4ddd0;--muted:#736d62;
+      --r:7px;--mono:'DM Mono',monospace;--serif:'Cormorant Garamond',serif;--sans:'Syne',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.7;overflow-x:hidden}
+    a{color:var(--gold);text-decoration:none}a:hover{color:var(--gold-lt)}
+    ::selection{background:var(--gold);color:#000}
+    ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.3}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;transition:all .4s}
+    nav.scrolled{background:rgba(8,8,8,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(14px)}
+    .nav-logo{font-family:var(--serif);font-size:1.35rem;font-weight:300;color:var(--gold-lt);letter-spacing:.05em}
+    .nav-logo span{font-style:italic;color:var(--gold)}
+    .nav-right{display:flex;align-items:center;gap:2rem}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;transition:color .2s}
+    .nav-links a:hover{color:var(--gold)}
+
+    /* LANG TOGGLE */
+    .lang-toggle{display:flex;align-items:center;gap:0;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;border:1px solid var(--border);border-radius:4px;overflow:hidden;flex-shrink:0}
+    .lang-btn{padding:.32rem .65rem;cursor:pointer;color:var(--muted);background:transparent;border:none;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;transition:all .2s;line-height:1}
+    .lang-btn.active{background:var(--gold);color:#000;font-weight:500}
+    .lang-btn:not(.active):hover{color:var(--gold)}
+    .lang-sep{color:var(--border);font-size:.7rem;pointer-events:none;line-height:1;align-self:stretch;display:flex;align-items:center}
+
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .hamburger span{display:block;width:22px;height:1.5px;background:var(--gold);transition:.3s}
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+    /* HERO */
+    #hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:8rem 4rem 5rem;overflow:hidden}
+    .hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(201,168,76,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.035) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 0%,transparent 100%)}
+    .hero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(201,168,76,.06) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+    .hero-content{position:relative;z-index:1;max-width:860px;text-align:center}
+    .hero-eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;opacity:0;animation:fadeUp .6s .2s ease forwards}
+    .hero-eyebrow::before,.hero-eyebrow::after{content:'——';margin:0 .7em;opacity:.4}
+    .hero-name{font-family:var(--serif);font-size:clamp(2.8rem,7.5vw,6rem);font-weight:300;line-height:1.05;color:#fff;opacity:0;animation:fadeUp .7s .35s ease forwards}
+    .hero-name em{font-style:italic;color:var(--gold-lt)}
+    .hero-positioning{margin-top:1.6rem;font-family:var(--serif);font-size:clamp(1.1rem,2.5vw,1.55rem);font-weight:300;font-style:italic;color:rgba(232,220,190,.75);line-height:1.5;opacity:0;animation:fadeUp .7s .5s ease forwards}
+    .hero-positioning strong{color:var(--gold-lt);font-style:normal;font-weight:400}
+    .hero-sub{margin-top:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.1em;opacity:0;animation:fadeUp .6s .65s ease forwards}
+    .hero-ctas{margin-top:2.8rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .8s ease forwards}
+    .btn-primary{padding:.85rem 2.2rem;background:var(--gold);color:#000;font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:pointer;border-radius:var(--r);transition:all .25s;display:inline-block}
+    .btn-primary:hover{background:var(--gold-lt);transform:translateY(-2px);color:#000}
+    .btn-outline{padding:.85rem 2.2rem;background:transparent;color:var(--gold);font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;border:1px solid var(--border);cursor:pointer;border-radius:var(--r);transition:all .25s;display:inline-block}
+    .btn-outline:hover{border-color:var(--gold);background:var(--gold-dim);transform:translateY(-2px)}
+    .hero-stats{margin-top:4rem;display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;padding-top:3rem;border-top:1px solid var(--border);opacity:0;animation:fadeUp .7s 1s ease forwards}
+    .stat{text-align:center}
+    .stat-num{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--gold);line-height:1}
+    .stat-label{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:.35rem}
+
+    /* COMMON */
+    section{position:relative;z-index:1;padding:6rem 4rem}
+    .section-tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+    .section-title{font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.9rem);font-weight:300;line-height:1.15;color:#fff}
+    .section-title em{font-style:italic;color:var(--gold-lt)}
+    .section-lead{margin-top:1rem;font-size:.95rem;color:rgba(228,221,208,.6);max-width:600px;line-height:1.85}
+    .divider{width:44px;height:1px;background:var(--gold);margin:1.4rem 0}
+    .container{max-width:1100px;margin:0 auto}
+
+    /* POSITIONING */
+    #positioning{background:var(--bg2)}
+    .pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .pos-text p{color:rgba(228,221,208,.72);line-height:1.95;margin-bottom:1.2rem;font-size:.97rem}
+    .pos-text p strong{color:var(--gold-lt);font-weight:600}
+    .pos-text p em{font-style:italic;color:rgba(228,221,208,.5)}
+    .pos-badges{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.8rem}
+    .badge{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;padding:.38rem .88rem;border:1px solid var(--border);border-radius:100px;color:var(--muted);background:var(--gold-dim);text-transform:uppercase}
+    .distinction-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2.5rem}
+    .distinction-title{font-family:var(--serif);font-size:1.3rem;color:var(--gold-lt);margin-bottom:1.8rem}
+    .distinction-row{display:flex;gap:1.2rem;padding:1rem 0;border-bottom:1px solid var(--border)}
+    .distinction-row:last-child{border-bottom:none}
+    .distinction-icon{font-size:1.2rem;padding-top:.1rem}
+    .distinction-body-title{font-weight:600;font-size:.9rem;color:var(--text);margin-bottom:.2rem}
+    .distinction-body-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+    /* SERVICES */
+    #services{background:var(--bg)}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+    .service-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2.2rem;transition:all .3s;position:relative;overflow:hidden}
+    .service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s}
+    .service-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px)}
+    .service-card:hover::before{opacity:1}
+    .service-num{font-family:var(--mono);font-size:.62rem;color:var(--gold);letter-spacing:.15em;margin-bottom:1rem;opacity:.6}
+    .service-title{font-family:var(--serif);font-size:1.4rem;color:#fff;margin-bottom:.9rem}
+    .service-desc{font-size:.87rem;color:rgba(228,221,208,.62);line-height:1.8;margin-bottom:1.4rem}
+    .service-stack{display:flex;flex-wrap:wrap;gap:.4rem}
+    .service-tech{font-family:var(--mono);font-size:.62rem;padding:.25rem .65rem;background:var(--gold-dim);border:1px solid rgba(201,168,76,.1);border-radius:3px;color:var(--gold)}
+
+    /* STACK */
+    #stack{background:var(--bg2)}
+    .stack-focus{background:var(--surface);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:2rem 2.5rem;margin-bottom:3rem;display:flex;align-items:center;gap:2rem}
+    .stack-focus-icon{font-size:2.5rem;flex-shrink:0}
+    .stack-focus-title{font-family:var(--serif);font-size:1.3rem;color:var(--gold-lt);margin-bottom:.4rem}
+    .stack-focus-desc{font-size:.88rem;color:rgba(228,221,208,.6);line-height:1.7}
+    .stack-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem}
+    .stack-col{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem}
+    .stack-col-label{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem}
+    .stack-items{display:flex;flex-direction:column;gap:.6rem}
+    .stack-item{display:flex;align-items:center;justify-content:space-between}
+    .stack-name{font-size:.88rem;color:var(--text)}
+    .stack-level{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em}
+    .stack-level.core{color:var(--gold)}
+    .stack-level.solid{color:#8aad6e}
+    .stack-level.growing{color:#6e8aad}
+    .stack-wp-note{margin-top:1.5rem;padding:1.2rem 1.5rem;background:var(--gold-dim);border:1px solid var(--border);border-radius:8px;font-size:.85rem;color:rgba(228,221,208,.65);font-style:italic}
+    .stack-wp-note strong{color:var(--gold);font-style:normal}
+
+    /* PROJECTS */
+    #projects{background:var(--bg)}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:2rem;margin-top:3rem}
+    .project-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .35s;display:flex;flex-direction:column}
+    .project-card:hover{border-color:rgba(201,168,76,.35);transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,.55)}
+    .project-thumb{height:190px;display:flex;align-items:center;justify-content:center;position:relative}
+    .project-thumb-placeholder{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;text-align:center}
+    .project-thumb-placeholder span{display:block;font-size:2.2rem;margin-bottom:.5rem;opacity:.45}
+    .project-body{padding:1.8rem;flex:1;display:flex;flex-direction:column}
+    .project-meta{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:.9rem}
+    .project-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:.22rem .6rem;background:var(--gold-dim);border:1px solid var(--border);border-radius:3px;color:var(--gold);text-transform:uppercase}
+    .project-outcome{display:inline-flex;align-items:center;gap:.5rem;background:rgba(138,173,110,.08);border:1px solid rgba(138,173,110,.2);border-radius:4px;padding:.3rem .75rem;font-family:var(--mono);font-size:.65rem;color:#8aad6e;letter-spacing:.08em;margin-bottom:.9rem}
+    .project-title{font-family:var(--serif);font-size:1.3rem;color:#fff;margin-bottom:.5rem}
+    .project-desc{font-size:.87rem;color:rgba(228,221,208,.6);line-height:1.75;flex:1}
+    .project-links{display:flex;gap:1rem;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+    .project-link{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.35rem;transition:color .2s}
+    .project-link:hover{color:var(--gold)}
+
+    /* EXPERIENCE */
+    #experience{background:var(--bg2)}
+    .timeline{position:relative;margin-top:3rem;padding-left:1.8rem}
+    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--border)}
+    .timeline-item{position:relative;padding:0 0 3.2rem 2.2rem}
+    .timeline-dot{position:absolute;left:-5px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--gold);border:2px solid var(--bg2)}
+    .timeline-period{font-family:var(--mono);font-size:.65rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+    .timeline-role{font-family:var(--serif);font-size:1.3rem;color:#fff}
+    .timeline-company{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.07em;margin-bottom:1rem}
+    .timeline-impacts{display:flex;flex-direction:column;gap:.5rem}
+    .timeline-impact{font-size:.88rem;color:rgba(228,221,208,.68);padding-left:1.1rem;position:relative;line-height:1.6}
+    .timeline-impact::before{content:'▸';position:absolute;left:0;color:var(--gold);font-size:.65rem;top:.2rem}
+    .timeline-impact strong{color:var(--text);font-weight:600}
+
+    /* NICHES */
+    #niches{background:var(--bg)}
+    .niches-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:2.5rem}
+    .niche-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2rem;transition:all .3s;position:relative;overflow:hidden}
+    .niche-card::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:0;background:var(--gold);transition:width .4s ease}
+    .niche-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px)}
+    .niche-card:hover::after{width:100%}
+    .niche-icon{font-size:1.8rem;margin-bottom:.9rem}
+    .niche-name{font-family:var(--serif);font-size:1.25rem;color:#fff;margin-bottom:.6rem}
+    .niche-desc{font-size:.84rem;color:rgba(228,221,208,.6);line-height:1.75;margin-bottom:1.1rem}
+    .niche-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+    .ntag{font-family:var(--mono);font-size:.6rem;padding:.22rem .6rem;background:var(--gold-dim);border:1px solid rgba(201,168,76,.1);border-radius:3px;color:var(--gold)}
+    .niches-note{margin-top:2rem;display:flex;align-items:flex-start;gap:.8rem;padding:1.2rem 1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.87rem;color:var(--muted);line-height:1.7}
+    .niches-note-icon{font-size:1.1rem;flex-shrink:0;padding-top:.05rem}
+    .niches-note a{color:var(--gold)}
+
+    /* TESTIMONIALS */
+    #testimonials{background:var(--bg2)}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+    .testimonial-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2rem;position:relative;transition:border-color .3s}
+    .testimonial-card:hover{border-color:rgba(201,168,76,.3)}
+    .testimonial-q{font-family:var(--serif);font-size:3.5rem;line-height:1;color:var(--gold);opacity:.2;position:absolute;top:.8rem;right:1.5rem}
+    .testimonial-text{font-family:var(--serif);font-size:1.03rem;font-style:italic;color:rgba(228,221,208,.78);line-height:1.85;margin-bottom:1.4rem}
+    .testimonial-author{display:flex;align-items:center;gap:.85rem}
+    .testimonial-avatar{width:40px;height:40px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.1rem;color:var(--gold);flex-shrink:0}
+    .testimonial-name{font-weight:600;font-size:.88rem}
+    .testimonial-role{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.08em;margin-top:.1rem}
+    .testimonials-cta{margin-top:2rem;text-align:center;padding:1.4rem;border:1px dashed var(--border);border-radius:8px;font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.08em}
+
+    /* CONTACT */
+    #contact{background:var(--bg)}
+    .contact-wrapper{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start}
+    .contact-info p{color:rgba(228,221,208,.62);line-height:1.9;font-size:.93rem;margin-bottom:1.5rem}
+    .contact-channels{display:flex;flex-direction:column;gap:.9rem}
+    .channel{display:flex;align-items:center;gap:1rem;padding:.95rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;transition:all .25s}
+    .channel:hover{border-color:rgba(201,168,76,.35);transform:translateX(5px)}
+    .channel-icon{color:var(--gold);font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+    .channel-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+    .channel-value{font-size:.88rem;color:var(--text);margin-top:.12rem}
+    .join-encart{margin-top:1.8rem;display:flex;align-items:flex-start;gap:1rem;padding:1.4rem 1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;border-left:3px solid rgba(201,168,76,.4);transition:border-color .25s}
+    .join-encart:hover{border-left-color:var(--gold)}
+    .join-icon{font-size:1.4rem;flex-shrink:0;padding-top:.1rem}
+    .join-title{font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.35rem}
+    .join-desc{font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:.8rem}
+    .join-link{font-family:var(--mono);font-size:.68rem;color:var(--gold);letter-spacing:.08em;transition:color .2s}
+    .join-link:hover{color:var(--gold-lt)}
+    .contact-form{display:flex;flex-direction:column;gap:1.1rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:.45rem}
+    .form-label{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+    .form-input,.form-textarea{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.8rem 1rem;color:var(--text);font-family:var(--sans);font-size:.88rem;outline:none;transition:border-color .25s;resize:none}
+    .form-input:focus,.form-textarea:focus{border-color:var(--gold)}
+    .form-textarea{min-height:125px}
+    .form-submit{align-self:flex-start;padding:.88rem 2.4rem;background:var(--gold);color:#000;border:none;cursor:pointer;font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;border-radius:var(--r);transition:all .25s}
+    .form-submit:hover{background:var(--gold-lt);transform:translateY(-2px)}
+    .availability-pill{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:#8aad6e;background:rgba(138,173,110,.08);border:1px solid rgba(138,173,110,.2);border-radius:100px;padding:.35rem .9rem;margin-bottom:1.5rem}
+    .availability-dot{width:7px;height:7px;border-radius:50%;background:#8aad6e;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:2.5rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;background:var(--bg2)}
+    .footer-brand{font-family:var(--serif);font-size:1.1rem;color:var(--gold-lt)}
+    .footer-copy{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em}
+    .footer-links{display:flex;gap:1.5rem}
+    .footer-links a{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+    .footer-links a:hover{color:var(--gold)}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:.12s}
+    .reveal-delay-2{transition-delay:.22s}
+    .reveal-delay-3{transition-delay:.32s}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+    /* LANG TRANSITION */
+    [data-i18n]{transition:opacity .18s ease}
+    body.lang-switching [data-i18n]{opacity:0}
+
+    @media(max-width:1000px){
+      nav{padding:1.1rem 1.5rem}
+      .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,8,8,.97);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;z-index:99}
+      .nav-links.open{display:flex}
+      .nav-links a{font-size:1rem}
+      .hamburger{display:flex}
+      .nav-right{gap:1rem}
+      section{padding:4rem 1.5rem}
+      #hero{padding:7rem 1.5rem 4rem}
+      .hero-stats{gap:1.8rem}
+      .pos-grid,.contact-wrapper{grid-template-columns:1fr;gap:2.5rem}
+      .form-row{grid-template-columns:1fr}
+      .stack-focus{flex-direction:column;gap:1rem;text-align:center}
+      footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}
+    }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-900 selection:bg-blue-100">
+<body>
 
-    <nav class="max-w-5xl mx-auto px-6 py-8 flex justify-between items-center">
-        <div class="font-black text-2xl tracking-tighter">OB.</div>
-        <div class="space-x-8 text-sm font-semibold uppercase tracking-widest text-slate-500">
-            <a href="#dev" class="hover:text-blue-600 transition">Ingénierie</a>
-            <a href="#lab" class="hover:text-blue-600 transition">Le Lab</a>
-            <a href="#lifestyle" class="hover:text-blue-600 transition">Lifestyle</a>
-        </div>
-    </nav>
-
-    <header class="max-w-5xl mx-auto px-6 py-20 text-left">
-    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
-        Orderic Barnor. <br> 10 ans à construire des solutions web au Bénin et à l'international.
-    </h1>
-    <p class="text-lg text-slate-700 max-w-2xl leading-relaxed">
-        Je ne cherche pas à "pisser du code" sur commande. Je prends un problème technique ou métier, et je livre l'outil qui le résout, de l'architecture au déploiement.
-    </p>
-</header>
-<header class="max-w-6xl mx-auto px-6 py-20">
-    <h1 class="text-5xl font-extrabold tracking-tight">Orderic Barnor</h1>
-    <p class="text-2xl text-blue-600 mt-2 font-medium">Développeur Fullstack & Architecte Logiciel</p>
-    <p class="mt-6 text-xl text-slate-700 max-w-3xl leading-relaxed">
-        10 ans d'expérience dans la création d'applications complexes. 
-        Expertise centrée sur la <strong>Stack MERN</strong> et le développement <strong>WordPress sur mesure</strong>[cite: 1, 6, 18].
-    </p>
-</header>
-
-<section class="max-w-6xl mx-auto px-6 py-12 border-t border-slate-200">
-    <h2 class="text-2xl font-bold uppercase tracking-widest text-slate-400 mb-10">Réalisations Clés</h2>
-    <div class="grid md:grid-cols-2 gap-12">
-        <div>
-            <h3 class="text-xl font-bold">Infrastructures Étatiques & Publiques</h3>
-            <ul class="mt-4 space-y-4 text-slate-600">
-                <li>• <strong>Xroad (Bénin) :</strong> Développement du back-office et des interfaces front-office[cite: 1, 43].</li>
-                <li>• <strong>Ville de Brossard (Canada) :</strong> Portail numérique de gestion des services municipaux[cite: 1, 37].</li>
-                <li>• <strong>Gim-Uemoa :</strong> Implémentation de bibliothèques PHP et API Laravel[cite: 1, 42].</li>
-            </ul>
-        </div>
-        <div>
-            <h3 class="text-xl font-bold">Solutions Business & SaaS</h3>
-            <ul class="mt-4 space-y-4 text-slate-600">
-                <li>• <strong>KODFI :</strong> Développement complet de la plateforme SaaS[cite: 1, 32].</li>
-                <li>• <strong>Zvelt :</strong> Intégration personnalisée de l'ERP Quickbooks.</li>
-                <li>• <strong>Aka-Elibrary :</strong> Refonte complète d'une librairie numérique[cite: 1, 34].</li>
-            </ul>
-        </div>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Orderic <span>Barnor</span></div>
+  <div class="nav-right">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#positioning" onclick="closeMenu()" data-i18n="nav.about">About</a></li>
+      <li><a href="#services" onclick="closeMenu()" data-i18n="nav.services">Services</a></li>
+      <li><a href="#stack" onclick="closeMenu()" data-i18n="nav.stack">Stack</a></li>
+      <li><a href="#projects" onclick="closeMenu()" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="#niches" onclick="closeMenu()" data-i18n="nav.domains">Domains</a></li>
+      <li><a href="#contact" onclick="closeMenu()" data-i18n="nav.contact">Work Together</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-sep">·</span>
+      <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
     </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Digital Solutions Partner</p>
+    <h1 class="hero-name">Orderic<br /><em>BARNOR</em></h1>
+    <p class="hero-positioning" data-i18n="hero.positioning">I don't just write code —<br />I <strong>turn your product vision into a working reality.</strong></p>
+    <p class="hero-sub">React · Node.js · Full-Stack Architecture · WordPress · Remote Worldwide</p>
+    <div class="hero-ctas">
+      <a href="#services" class="btn-primary" data-i18n="hero.cta1">How I Can Help →</a>
+      <a href="#contact" class="btn-outline" data-i18n="hero.cta2">Let's Talk</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-label" data-i18n="hero.stat1">Years Building</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label" data-i18n="hero.stat2">Continents Served</div></div>
+      <div class="stat"><div class="stat-num">15+</div><div class="stat-label" data-i18n="hero.stat3">Products Shipped</div></div>
+      <div class="stat"><div class="stat-num">∞</div><div class="stat-label" data-i18n="hero.stat4">Remote-Ready</div></div>
+    </div>
+  </div>
 </section>
 
-<section class="max-w-6xl mx-auto px-6 py-12 bg-slate-50 rounded-3xl">
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-            <h2 class="text-2xl font-bold mb-4">Direction Technique & Impact</h2>
-            <p class="text-slate-600 leading-relaxed">
-                Référent technique principal pour TelemedAfrika et FUND.lab. 
-                J'ai assuré le mentorat des développeurs juniors [cite: 1, 44] et je sers actuellement comme 
-                <strong>Secrétaire Général</strong> dans le secteur de la littérature africaine.
-            </p>
+<!-- POSITIONING -->
+<section id="positioning">
+  <div class="container">
+    <div class="pos-grid">
+      <div class="pos-text reveal">
+        <p class="section-tag" data-i18n="about.tag">01 — Who I Am</p>
+        <h2 class="section-title" data-i18n="about.title">Beyond the<br /><em>developer label</em></h2>
+        <div class="divider"></div>
+        <p data-i18n="about.p1">After <strong>10+ years</strong> building web products — from fintech platforms in West Africa to municipal portals in Canada — I've learned something most developers don't talk about: <em>the code is never the hard part.</em></p>
+        <p data-i18n="about.p2">The hard part is understanding what a business actually needs, designing the right architecture to get there, and delivering something that works — without hand-holding or micromanagement.</p>
+        <p data-i18n="about.p3">I work as a <strong>technical partner</strong>, not a contractor waiting for tickets. I bring ideas, challenge assumptions when needed, and build with an eye on long-term maintainability. When a project calls for it, I lead and coordinate a team.</p>
+        <p data-i18n="about.p4">Based in <strong>Cotonou, Bénin</strong>. Available to clients in <strong>Europe, Canada, the Americas</strong>, and across <strong>Africa</strong>.</p>
+        <div class="pos-badges">
+          <span class="badge" data-i18n="badge.solution">Solution-driven</span>
+          <span class="badge" data-i18n="badge.remote">Remote-first</span>
+          <span class="badge" data-i18n="badge.agile">Agile mindset</span>
+          <span class="badge" data-i18n="badge.lead">Tech leadership</span>
+          <span class="badge" data-i18n="badge.mentor">Mentoring</span>
+          <span class="badge">FR · EN</span>
         </div>
-        <div class="border-l-4 border-blue-600 pl-8 italic text-slate-700 text-lg">
-            "Partout où je passe, j’essaie d’apporter cette ambiance-là, de rendre le cadre plus vivant tout en travaillant sérieusement." 
-            <span class="block mt-2 font-bold not-italic text-sm">— Impact Mentoring</span>
+      </div>
+      <div class="distinction-card reveal reveal-delay-2">
+        <div class="distinction-title" data-i18n="distinction.title">What sets me apart</div>
+        <div class="distinction-row">
+          <div class="distinction-icon">🎯</div>
+          <div>
+            <div class="distinction-body-title" data-i18n="distinction.d1.title">Outcome-oriented</div>
+            <div class="distinction-body-desc" data-i18n="distinction.d1.desc">I care about the problem you're solving, not just the feature you're requesting. I ask questions. I push back when it matters.</div>
+          </div>
         </div>
+        <div class="distinction-row">
+          <div class="distinction-icon">🌍</div>
+          <div>
+            <div class="distinction-body-title" data-i18n="distinction.d2.title">Dual-market expertise</div>
+            <div class="distinction-body-desc" data-i18n="distinction.d2.desc">I understand Western product standards and African market realities. I build things that work well in both worlds.</div>
+          </div>
+        </div>
+        <div class="distinction-row">
+          <div class="distinction-icon">⚡</div>
+          <div>
+            <div class="distinction-body-title" data-i18n="distinction.d3.title">Fully autonomous</div>
+            <div class="distinction-body-desc" data-i18n="distinction.d3.desc">No babysitting needed. I scope, execute, and deliver. I communicate proactively when something changes.</div>
+          </div>
+        </div>
+        <div class="distinction-row">
+          <div class="distinction-icon">🏗️</div>
+          <div>
+            <div class="distinction-body-title" data-i18n="distinction.d4.title">Architecture-first thinking</div>
+            <div class="distinction-body-desc" data-i18n="distinction.d4.desc">I think in systems, not just in files. The decisions I make on day one still hold up six months later.</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<footer class="max-w-6xl mx-auto px-6 py-20 flex justify-between items-center text-sm font-bold uppercase tracking-widest">
-    <div class="flex gap-6">
-        <a href="/cuisine" class="text-slate-400 hover:text-black">Cuisinier</a>
-        <a href="/locksticien" class="text-slate-400 hover:text-black">Locksticien</a>
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <p class="section-tag reveal" data-i18n="services.tag">02 — What I Offer</p>
+    <h2 class="section-title reveal" data-i18n="services.title">Where I add<br /><em>the most value</em></h2>
+    <p class="section-lead reveal" data-i18n="services.lead">Not a list of technologies. A list of problems I help you solve.</p>
+    <div class="divider reveal"></div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-title" data-i18n="s1.title">Product Development, End-to-End</div>
+        <div class="service-desc" data-i18n="s1.desc">You have an idea — or a half-built product that needs rescuing. I design the architecture, build the full-stack application, and ship something real. From MVP to production-grade.</div>
+        <div class="service-stack"><span class="service-tech">React</span><span class="service-tech">Node.js</span><span class="service-tech">MongoDB</span><span class="service-tech">Express</span><span class="service-tech">Next.js</span></div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-title" data-i18n="s2.title">Technical Partnership & Consulting</div>
+        <div class="service-desc" data-i18n="s2.desc">Your team is building but needs senior guidance. I embed as a tech lead — reviewing architecture, mentoring devs, removing blockers, and making the calls that keep the project on track.</div>
+        <div class="service-stack"><span class="service-tech" data-i18n="tech.arch">Architecture review</span><span class="service-tech" data-i18n="tech.audit">Code audit</span><span class="service-tech" data-i18n="tech.mentor">Team mentoring</span></div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-title" data-i18n="s3.title">React / MERN Applications</div>
+        <div class="service-desc" data-i18n="s3.desc">SPAs, dashboards, data-driven platforms, APIs — built with a modern MERN stack. Clean component architecture, performant, and maintainable. I write code I'd be proud to hand over.</div>
+        <div class="service-stack"><span class="service-tech">React</span><span class="service-tech">TypeScript</span><span class="service-tech">Express API</span><span class="service-tech">MongoDB</span><span class="service-tech">PostgreSQL</span></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">04</div>
+        <div class="service-title" data-i18n="s4.title">WordPress — Themes, Plugins & Engineering</div>
+        <div class="service-desc" data-i18n="s4.desc">I build WordPress from the ground up — custom themes crafted to spec, plugins architected for real business logic, WooCommerce flows, payment integration, REST API extensions. Not config work. Code.</div>
+        <div class="service-stack"><span class="service-tech" data-i18n="tech.themes">Custom themes</span><span class="service-tech" data-i18n="tech.plugins">Plugin dev</span><span class="service-tech">WooCommerce</span><span class="service-tech">REST API</span><span class="service-tech">Statamic</span></div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">05</div>
+        <div class="service-title" data-i18n="s5.title">African Market Digital Strategy</div>
+        <div class="service-desc" data-i18n="s5.desc">I help international companies adapt their digital products for African markets — mobile-first UX, low-bandwidth optimisation, local payment methods, and culturally relevant interfaces.</div>
+        <div class="service-stack"><span class="service-tech" data-i18n="tech.mobile">Mobile-first</span><span class="service-tech" data-i18n="tech.perf">Performance</span><span class="service-tech" data-i18n="tech.local">Local context</span></div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">06</div>
+        <div class="service-title" data-i18n="s6.title">Legacy Rescue & Modernisation</div>
+        <div class="service-desc" data-i18n="s6.desc">Inherited a codebase that's holding you back? I assess what's there, cut what's dead weight, and migrate toward a maintainable, modern stack — with minimal disruption to your operations.</div>
+        <div class="service-stack"><span class="service-tech" data-i18n="tech.audit2">Audit</span><span class="service-tech" data-i18n="tech.refactor">Refactoring</span><span class="service-tech" data-i18n="tech.migration">Migration</span><span class="service-tech" data-i18n="tech.docs">Documentation</span></div>
+      </div>
     </div>
-    <div class="text-slate-300">Cotonou, Bénin</div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="container">
+    <p class="section-tag reveal" data-i18n="stack.tag">03 — My Stack</p>
+    <h2 class="section-title reveal" data-i18n="stack.title">Tools I build<br /><em>with today</em></h2>
+    <div class="divider reveal"></div>
+    <div class="stack-focus reveal">
+      <div class="stack-focus-icon">⚛️</div>
+      <div>
+        <div class="stack-focus-title" data-i18n="stack.focus.title">Primary focus: MERN Stack</div>
+        <div class="stack-focus-desc" data-i18n="stack.focus.desc">My current direction is the React ecosystem — from frontend UI to Node/Express APIs, MongoDB data layers, and deployment on modern cloud infrastructure. This is where I build the deepest expertise, and where I do my best work today.</div>
+      </div>
+    </div>
+    <div class="stack-cols reveal">
+      <div class="stack-col">
+        <div class="stack-col-label" data-i18n="stack.col.frontend">Frontend</div>
+        <div class="stack-items">
+          <div class="stack-item"><span class="stack-name">React.js</span><span class="stack-level core" data-i18n="level.core">Core</span></div>
+          <div class="stack-item"><span class="stack-name">Next.js</span><span class="stack-level core" data-i18n="level.core2">Core</span></div>
+          <div class="stack-item"><span class="stack-name">TypeScript</span><span class="stack-level solid" data-i18n="level.solid">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">Vue / Nuxt</span><span class="stack-level solid" data-i18n="level.solid2">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">HTML5 / CSS3</span><span class="stack-level core" data-i18n="level.core3">Core</span></div>
+        </div>
+      </div>
+      <div class="stack-col">
+        <div class="stack-col-label" data-i18n="stack.col.backend">Backend</div>
+        <div class="stack-items">
+          <div class="stack-item"><span class="stack-name">Node.js</span><span class="stack-level core" data-i18n="level.core4">Core</span></div>
+          <div class="stack-item"><span class="stack-name">Express.js</span><span class="stack-level core" data-i18n="level.core5">Core</span></div>
+          <div class="stack-item"><span class="stack-name">Laravel / PHP</span><span class="stack-level solid" data-i18n="level.solid3">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">REST API design</span><span class="stack-level core" data-i18n="level.core6">Core</span></div>
+        </div>
+      </div>
+      <div class="stack-col">
+        <div class="stack-col-label" data-i18n="stack.col.data">Data & Infra</div>
+        <div class="stack-items">
+          <div class="stack-item"><span class="stack-name">MongoDB</span><span class="stack-level core" data-i18n="level.core7">Core</span></div>
+          <div class="stack-item"><span class="stack-name">PostgreSQL</span><span class="stack-level solid" data-i18n="level.solid4">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">MySQL</span><span class="stack-level solid" data-i18n="level.solid5">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">Docker</span><span class="stack-level solid" data-i18n="level.solid6">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">AWS</span><span class="stack-level growing" data-i18n="level.growing">Growing</span></div>
+        </div>
+      </div>
+      <div class="stack-col">
+        <div class="stack-col-label" data-i18n="stack.col.platforms">Platforms & Tools</div>
+        <div class="stack-items">
+          <div class="stack-item"><span class="stack-name" data-i18n="stack.wp">WordPress (dev)</span><span class="stack-level solid" data-i18n="level.solid7">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">Statamic</span><span class="stack-level solid" data-i18n="level.solid8">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">Git / GitHub</span><span class="stack-level core" data-i18n="level.core8">Core</span></div>
+          <div class="stack-item"><span class="stack-name">CI/CD (GitLab)</span><span class="stack-level solid" data-i18n="level.solid9">Solid</span></div>
+          <div class="stack-item"><span class="stack-name">Linux</span><span class="stack-level solid" data-i18n="level.solid10">Solid</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="stack-wp-note reveal" data-i18n="stack.wp.note"><strong>A note on WordPress:</strong> I build custom themes from scratch and architect plugins with real business logic — not off-the-shelf customisation. Custom post types, REST API extensions, WooCommerce flows, performance engineering. If your WordPress project is technically demanding, we'll work well together.</div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-tag reveal" data-i18n="projects.tag">04 — Work</p>
+    <h2 class="section-title reveal" data-i18n="projects.title">Problems I've<br /><em>already solved</em></h2>
+    <div class="divider reveal"></div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0e0e0e,#1a1200)">
+          <div class="project-thumb-placeholder"><span>💳</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-tag">Fintech</span><span class="project-tag">Africa</span></div>
+          <div class="project-outcome" data-i18n="p1.outcome">✦ Built from scratch — 0 to live product</div>
+          <h3 class="project-title">KODFI</h3>
+          <p class="project-desc" data-i18n="p1.desc">Designed and shipped a fintech platform for the African market — full ownership of architecture, development, and deployment. A real product solving a real problem.</p>
+          <div class="project-links"><a href="https://kodfi.vercel.app" target="_blank" rel="noopener" class="project-link" data-i18n="project.live">↗ Live demo</a></div>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a14,#001a0a)">
+          <div class="project-thumb-placeholder"><span>🔗</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-tag">SaaS Integration</span><span class="project-tag">Laravel</span></div>
+          <div class="project-outcome" data-i18n="p2.outcome">✦ Bridged two complex systems without breaking either</div>
+          <h3 class="project-title">Zvelt — QuickBooks Integration</h3>
+          <p class="project-desc" data-i18n="p2.desc">Custom two-way integration between Zvelt and QuickBooks. Real-time financial sync, edge case handling, zero data loss. The kind of feature that sounds simple and isn't.</p>
+          <div class="project-links"><a href="https://www.zvelt.com" target="_blank" rel="noopener" class="project-link" data-i18n="project.visit">↗ Visit</a></div>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a14,#14000a)">
+          <div class="project-thumb-placeholder"><span>🏙️</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-tag">E-Government</span><span class="project-tag">Canada</span></div>
+          <div class="project-outcome" data-i18n="p3.outcome">✦ International team, high-stakes public delivery</div>
+          <h3 class="project-title" data-i18n="p3.title">City of Brossard — Municipal Portal</h3>
+          <p class="project-desc" data-i18n="p3.desc">Digital portal for the City of Brossard (Québec) — citizen services, online municipal management, information systems. Cross-border collaboration, demanding client standards.</p>
+          <div class="project-links"><span class="project-link" style="cursor:default" data-i18n="project.nda">🔒 Under NDA</span></div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0e0a00,#0a0e00)">
+          <div class="project-thumb-placeholder"><span>🚦</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-tag">NuxtJS</span><span class="project-tag">Laravel</span><span class="project-tag">Bénin</span></div>
+          <div class="project-outcome" data-i18n="p4.outcome">✦ Full-stack ownership — back-office to UI</div>
+          <h3 class="project-title">Xroad</h3>
+          <p class="project-desc" data-i18n="p4.desc">Complete back-office and NuxtJS front-office for a Beninese digital infrastructure platform. From data architecture to polished interfaces.</p>
+          <div class="project-links"><a href="https://xroad.bj" target="_blank" rel="noopener" class="project-link" data-i18n="project.visit2">↗ Visit</a></div>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#001008,#000a10)">
+          <div class="project-thumb-placeholder"><span>🏥</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-tag">HealthTech</span><span class="project-tag">Vue.js</span><span class="project-tag">Mobile-first</span></div>
+          <div class="project-outcome" data-i18n="p5.outcome">✦ Optimised for African mobile healthcare contexts</div>
+          <h3 class="project-title">GeMed — Telemedicine</h3>
+          <p class="project-desc" data-i18n="p5.desc">Frontend architecture for a telemedicine platform built for African healthcare realities. Mobile-first, lightweight, designed for variable connectivity conditions.</p>
+          <div class="project-links"><span class="project-link" style="cursor:default" data-i18n="project.private">🔒 Private</span></div>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a0a,#0f0a14)">
+          <div class="project-thumb-placeholder"><span>🛒</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-tag">WordPress</span><span class="project-tag">France</span><span class="project-tag">E-commerce</span></div>
+          <div class="project-outcome" data-i18n="p6.outcome">✦ Advanced WP dev beyond what plugins could handle</div>
+          <h3 class="project-title" data-i18n="p6.title">French E-commerce — Custom WP</h3>
+          <p class="project-desc" data-i18n="p6.desc">Bespoke WordPress features — custom purchase flows, payment gateway, live chat, long-term maintenance. Not config work. Engineering.</p>
+          <div class="project-links"><a href="https://jacques-cartier.com" target="_blank" rel="noopener" class="project-link" data-i18n="project.visit3">↗ Visit</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <p class="section-tag reveal" data-i18n="exp.tag">05 — Track Record</p>
+    <h2 class="section-title reveal" data-i18n="exp.title">Where I've<br /><em>made a difference</em></h2>
+    <div class="divider reveal"></div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">Sep 2016 — Present</div>
+        <div class="timeline-role" data-i18n="exp.e1.role">Independent Technical Partner</div>
+        <div class="timeline-company" data-i18n="exp.e1.company">Freelance — Remote Worldwide</div>
+        <div class="timeline-impacts">
+          <div class="timeline-impact" data-i18n="exp.e1.i1"><strong>Designed and shipped KODFI</strong> — a fintech platform for the African market, handled end-to-end from architecture to production deployment.</div>
+          <div class="timeline-impact" data-i18n="exp.e1.i2">Advised INA-AFRICA NGO on their digital infrastructure and web presence.</div>
+          <div class="timeline-impact" data-i18n="exp.e1.i3">Contributed to the redesign of the Aka-Elibrary digital library platform.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">Sep 2022 — Dec 2024</div>
+        <div class="timeline-role" data-i18n="exp.e2.role">Senior Fullstack Developer</div>
+        <div class="timeline-company" data-i18n="exp.e2.company">Intside — Hybrid</div>
+        <div class="timeline-impacts">
+          <div class="timeline-impact" data-i18n="exp.e2.i1"><strong>Solved a complex integration challenge</strong> — built a custom QuickBooks connector for zvelt.com, enabling real-time financial data sync across two distinct systems.</div>
+          <div class="timeline-impact" data-i18n="exp.e2.i2"><strong>Delivered for an international client</strong> — contributed to the City of Brossard's (Canada) municipal portal in a distributed cross-border team.</div>
+          <div class="timeline-impact" data-i18n="exp.e2.i3">Built advanced WordPress features beyond standard plugin capabilities for a French client.</div>
+          <div class="timeline-impact" data-i18n="exp.e2.i4">Designed the frontend proposal for a diplomatic visa management system.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">Feb 2021 — Aug 2022</div>
+        <div class="timeline-role" data-i18n="exp.e3.role">Fullstack Developer & Team Lead</div>
+        <div class="timeline-company" data-i18n="exp.e3.company">Nautilus Technology — Hybrid, Bénin</div>
+        <div class="timeline-impacts">
+          <div class="timeline-impact" data-i18n="exp.e3.i1"><strong>Took ownership of multiple platforms</strong> — APIEx, ADN Benin, Xroad — delivering both backend architecture and polished frontend interfaces simultaneously.</div>
+          <div class="timeline-impact" data-i18n="exp.e3.i2"><strong>Mentored junior developers</strong>, growing the team's technical capacity while maintaining delivery timelines.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">May 2020 — Nov 2020</div>
+        <div class="timeline-role" data-i18n="exp.e4.role">Frontend Developer & Tech Advisor</div>
+        <div class="timeline-company" data-i18n="exp.e4.company">TelemedAfrika — Cotonou, Bénin</div>
+        <div class="timeline-impacts">
+          <div class="timeline-impact" data-i18n="exp.e4.i1"><strong>Became the go-to technical voice</strong> for the company's digital decisions — well beyond the original frontend role.</div>
+          <div class="timeline-impact" data-i18n="exp.e4.i2">Built the GeMed telemedicine frontend (Vue.js), optimised for African users on limited mobile connectivity.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">2018 — 2019</div>
+        <div class="timeline-role" data-i18n="exp.e5.role">Web Developer / Web Master</div>
+        <div class="timeline-company">ORION ORIGIN · FUND.lab — Cotonou, Bénin</div>
+        <div class="timeline-impacts">
+          <div class="timeline-impact" data-i18n="exp.e5.i1">WordPress development, technical client support, and digital visibility strategy. Where it all started.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NICHES -->
+<section id="niches">
+  <div class="container">
+    <p class="section-tag reveal" data-i18n="niches.tag">06 — Domains</p>
+    <h2 class="section-title reveal" data-i18n="niches.title">Industries I build<br /><em>solutions for</em></h2>
+    <p class="section-lead reveal" data-i18n="niches.lead">I bring both technical depth and domain familiarity to these verticals — less time explaining context, faster decisions, better products.</p>
+    <div class="divider reveal"></div>
+    <div class="niches-grid reveal">
+      <div class="niche-card">
+        <div class="niche-icon">🚀</div>
+        <div class="niche-name" data-i18n="niche.saas.name">SaaS & Startups</div>
+        <div class="niche-desc" data-i18n="niche.saas.desc">Fast iteration, scalable architecture, and the discipline to make good technical decisions under pressure. I've been the person who ships the MVP <em>and</em> the one who cleans it up six months later.</div>
+        <div class="niche-tags"><span class="ntag">React</span><span class="ntag">Node.js</span><span class="ntag">API design</span><span class="ntag">MVP</span></div>
+      </div>
+      <div class="niche-card">
+        <div class="niche-icon">🏠</div>
+        <div class="niche-name" data-i18n="niche.immo.name">Real Estate</div>
+        <div class="niche-desc" data-i18n="niche.immo.desc">Property listing platforms, search & filter UX, agent portals, CRM integrations. A sector where performance and trust signals directly affect conversion — I build with both in mind.</div>
+        <div class="niche-tags"><span class="ntag" data-i18n="niche.immo.t1">Listing platforms</span><span class="ntag">Search UX</span><span class="ntag">CRM</span><span class="ntag">WordPress</span></div>
+      </div>
+      <div class="niche-card">
+        <div class="niche-icon">💰</div>
+        <div class="niche-name" data-i18n="niche.finance.name">Finance & Fintech</div>
+        <div class="niche-desc" data-i18n="niche.finance.desc">From African mobile payment flows to Western accounting integrations. I understand financial data sensitivity, audit trails, and the precision required in fintech engineering.</div>
+        <div class="niche-tags"><span class="ntag" data-i18n="niche.finance.t1">Payment systems</span><span class="ntag">API integration</span><span class="ntag" data-i18n="niche.finance.t2">Data integrity</span><span class="ntag">Africa</span></div>
+      </div>
+      <div class="niche-card">
+        <div class="niche-icon">🏥</div>
+        <div class="niche-name" data-i18n="niche.health.name">Health & MedTech</div>
+        <div class="niche-desc" data-i18n="niche.health.desc">Telemedicine platforms, patient portals, appointment systems. I've built for African healthcare constraints — mobile-first, low-bandwidth, high-stakes. I know what "reliable" means in this sector.</div>
+        <div class="niche-tags"><span class="ntag">Telemedicine</span><span class="ntag">Mobile-first</span><span class="ntag" data-i18n="niche.health.t1">Performance</span><span class="ntag">Vue/React</span></div>
+      </div>
+      <div class="niche-card">
+        <div class="niche-icon">🌍</div>
+        <div class="niche-name" data-i18n="niche.ngo.name">NGO & Social Impact</div>
+        <div class="niche-desc" data-i18n="niche.ngo.desc">Organisations doing meaningful work deserve digital infrastructure that matches their ambition. I build efficient, maintainable solutions with an eye on budget realities — and I understand the African context deeply.</div>
+        <div class="niche-tags"><span class="ntag">Africa</span><span class="ntag" data-i18n="niche.ngo.t1">Lean builds</span><span class="ntag">CMS</span><span class="ntag" data-i18n="niche.ngo.t2">Accessibility</span></div>
+      </div>
+      <div class="niche-card">
+        <div class="niche-icon">🛒</div>
+        <div class="niche-name" data-i18n="niche.ecom.name">E-commerce & WooCommerce</div>
+        <div class="niche-desc" data-i18n="niche.ecom.desc">Custom WooCommerce development, checkout optimisation, product catalogue architecture, payment gateway integration. For businesses whose revenue depends on their cart not breaking at 2am.</div>
+        <div class="niche-tags"><span class="ntag">WooCommerce</span><span class="ntag" data-i18n="niche.ecom.t1">Custom plugins</span><span class="ntag" data-i18n="niche.ecom.t2">Payments</span><span class="ntag" data-i18n="niche.ecom.t3">Performance</span></div>
+      </div>
+    </div>
+    <div class="niches-note reveal">
+      <span class="niches-note-icon">💡</span>
+      <span data-i18n="niches.note">Don't see your industry here? Most of what I do transfers across verticals. <a href="#contact">Tell me about your project</a> and we'll figure it out together.</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <p class="section-tag reveal" data-i18n="testi.tag">07 — Testimonials</p>
+    <h2 class="section-title reveal" data-i18n="testi.title">In their<br /><em>own words</em></h2>
+    <div class="divider reveal"></div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-q">"</div>
+        <p class="testimonial-text" data-i18n="testi.t1.text">Orderic is a rare profile — technically excellent, deeply autonomous, and always thinking about the business outcome, not just the code. His work was precise and delivered ahead of schedule.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-name">— Intside</div>
+            <div class="testimonial-role" data-i18n="testi.placeholder">[ To be replaced with real quote ]</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-q">"</div>
+        <p class="testimonial-text" data-i18n="testi.t2.text">Beyond his technical depth, what stood out was how he raised the whole team's level. He challenged architecture when needed, and made junior devs grow visibly.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">N</div>
+          <div>
+            <div class="testimonial-name">— Nautilus Technology</div>
+            <div class="testimonial-role" data-i18n="testi.placeholder2">[ To be replaced with real quote ]</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-q">"</div>
+        <p class="testimonial-text" data-i18n="testi.t3.text">He understood our healthcare context immediately and delivered something that actually works for African users on mobile — something many developers with far more resources haven't gotten right.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">T</div>
+          <div>
+            <div class="testimonial-name">— TelemedAfrika</div>
+            <div class="testimonial-role" data-i18n="testi.placeholder3">[ To be replaced with real quote ]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonials-cta reveal" data-i18n="testi.cta">
+      ✏️ Placeholders — real quotes from colleagues will replace these soon.
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrapper">
+      <div class="contact-info reveal">
+        <p class="section-tag" data-i18n="contact.tag">08 — Work Together</p>
+        <h2 class="section-title" data-i18n="contact.title">Let's solve<br /><em>something real</em></h2>
+        <div class="divider"></div>
+        <div class="availability-pill"><div class="availability-dot"></div> <span data-i18n="contact.avail">Available for new projects</span></div>
+        <p data-i18n="contact.p1">If you have a product to build, a team that needs a senior technical voice, or a digital challenge you haven't found the right person for yet — let's talk.</p>
+        <p data-i18n="contact.p2">I work with startups, agencies, NGOs, and established businesses across Europe, Canada, the Americas, and Africa. I respond within 24 hours.</p>
+        <div class="contact-channels">
+          <a href="mailto:barnororderic@gmail.com" class="channel">
+            <span class="channel-icon">✉️</span>
+            <div><div class="channel-label">Email</div><div class="channel-value">barnororderic@gmail.com</div></div>
+          </a>
+          <a href="tel:+22901663253" class="channel">
+            <span class="channel-icon">📞</span>
+            <div><div class="channel-label">Phone / WhatsApp</div><div class="channel-value">+229 01 66 32 53 53</div></div>
+          </a>
+          <a href="#" target="_blank" rel="noopener" class="channel">
+            <span class="channel-icon">🐙</span>
+            <div><div class="channel-label">GitHub</div><div class="channel-value" data-i18n="contact.gh">Add your handle →</div></div>
+          </a>
+          <a href="#" target="_blank" rel="noopener" class="channel">
+            <span class="channel-icon">💼</span>
+            <div><div class="channel-label">LinkedIn</div><div class="channel-value" data-i18n="contact.li">Add your profile →</div></div>
+          </a>
+        </div>
+        <div class="join-encart">
+          <div class="join-icon">🤝</div>
+          <div class="join-body">
+            <div class="join-title" data-i18n="join.title">Are you a developer?</div>
+            <div class="join-desc" data-i18n="join.desc">I occasionally bring in collaborators on projects that need extra hands — React devs, WordPress specialists, designers. If you're autonomous, serious, and want to work on real products, reach out.</div>
+            <a href="mailto:barnororderic@gmail.com?subject=I'd like to collaborate with you" class="join-link" data-i18n="join.cta">Get in touch →</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label" data-i18n="form.fname">First name</label><input class="form-input" type="text" data-i18n-placeholder="form.fname.ph" placeholder="John" /></div>
+          <div class="form-group"><label class="form-label" data-i18n="form.lname">Last name</label><input class="form-input" type="text" data-i18n-placeholder="form.lname.ph" placeholder="Doe" /></div>
+        </div>
+        <div class="form-group"><label class="form-label" data-i18n="form.email">Email</label><input class="form-input" type="email" placeholder="you@company.com" /></div>
+        <div class="form-group"><label class="form-label" data-i18n="form.subject">What are you looking for?</label><input class="form-input" type="text" data-i18n-placeholder="form.subject.ph" placeholder="MVP build / Tech lead / WordPress / Consulting..." /></div>
+        <div class="form-group"><label class="form-label" data-i18n="form.message">Tell me more</label><textarea class="form-textarea" data-i18n-placeholder="form.message.ph" placeholder="Describe the challenge, timeline, and what success looks like for you..."></textarea></div>
+        <button class="form-submit" onclick="handleSubmit()" data-i18n="form.submit">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Orderic <em style="font-style:italic;color:var(--gold)">Barnor</em></div>
+  <div class="footer-copy" data-i18n="footer.copy">© 2025 Orderic Barnor · Digital Solutions Partner</div>
+  <div class="footer-links">
+    <a href="#hero" data-i18n="footer.top">Top ↑</a>
+    <a href="mailto:barnororderic@gmail.com">Email</a>
+    <a href="#contact" data-i18n="footer.hire">Work Together</a>
+  </div>
 </footer>
 
+<script>
+/* ── TRANSLATIONS ───────────────────────────────── */
+const T = {
+  en: {
+    'nav.about':'About','nav.services':'Services','nav.stack':'Stack',
+    'nav.projects':'Projects','nav.domains':'Domains','nav.contact':'Work Together',
+    'hero.eyebrow':'Digital Solutions Partner',
+    'hero.positioning':'I don\'t just write code —<br />I <strong>turn your product vision into a working reality.</strong>',
+    'hero.cta1':'How I Can Help →','hero.cta2':'Let\'s Talk',
+    'hero.stat1':'Years Building','hero.stat2':'Continents Served',
+    'hero.stat3':'Products Shipped','hero.stat4':'Remote-Ready',
+    'about.tag':'01 — Who I Am',
+    'about.title':'Beyond the<br /><em>developer label</em>',
+    'about.p1':'After <strong>10+ years</strong> building web products — from fintech platforms in West Africa to municipal portals in Canada — I\'ve learned something most developers don\'t talk about: <em>the code is never the hard part.</em>',
+    'about.p2':'The hard part is understanding what a business actually needs, designing the right architecture to get there, and delivering something that works — without hand-holding or micromanagement.',
+    'about.p3':'I work as a <strong>technical partner</strong>, not a contractor waiting for tickets. I bring ideas, challenge assumptions when needed, and build with an eye on long-term maintainability. When a project calls for it, I lead and coordinate a team.',
+    'about.p4':'Based in <strong>Cotonou, Bénin</strong>. Available to clients in <strong>Europe, Canada, the Americas</strong>, and across <strong>Africa</strong>.',
+    'badge.solution':'Solution-driven','badge.remote':'Remote-first','badge.agile':'Agile mindset',
+    'badge.lead':'Tech leadership','badge.mentor':'Mentoring',
+    'distinction.title':'What sets me apart',
+    'distinction.d1.title':'Outcome-oriented','distinction.d1.desc':'I care about the problem you\'re solving, not just the feature you\'re requesting. I ask questions. I push back when it matters.',
+    'distinction.d2.title':'Dual-market expertise','distinction.d2.desc':'I understand Western product standards and African market realities. I build things that work well in both worlds.',
+    'distinction.d3.title':'Fully autonomous','distinction.d3.desc':'No babysitting needed. I scope, execute, and deliver. I communicate proactively when something changes.',
+    'distinction.d4.title':'Architecture-first thinking','distinction.d4.desc':'I think in systems, not just in files. The decisions I make on day one still hold up six months later.',
+    'services.tag':'02 — What I Offer',
+    'services.title':'Where I add<br /><em>the most value</em>',
+    'services.lead':'Not a list of technologies. A list of problems I help you solve.',
+    's1.title':'Product Development, End-to-End','s1.desc':'You have an idea — or a half-built product that needs rescuing. I design the architecture, build the full-stack application, and ship something real. From MVP to production-grade.',
+    's2.title':'Technical Partnership & Consulting','s2.desc':'Your team is building but needs senior guidance. I embed as a tech lead — reviewing architecture, mentoring devs, removing blockers, and making the calls that keep the project on track.',
+    's3.title':'React / MERN Applications','s3.desc':'SPAs, dashboards, data-driven platforms, APIs — built with a modern MERN stack. Clean component architecture, performant, and maintainable. I write code I\'d be proud to hand over.',
+    's4.title':'WordPress — Themes, Plugins & Engineering','s4.desc':'I build WordPress from the ground up — custom themes crafted to spec, plugins architected for real business logic, WooCommerce flows, payment integration, REST API extensions. Not config work. Code.',
+    's5.title':'African Market Digital Strategy','s5.desc':'I help international companies adapt their digital products for African markets — mobile-first UX, low-bandwidth optimisation, local payment methods, and culturally relevant interfaces.',
+    's6.title':'Legacy Rescue & Modernisation','s6.desc':'Inherited a codebase that\'s holding you back? I assess what\'s there, cut what\'s dead weight, and migrate toward a maintainable, modern stack — with minimal disruption.',
+    'tech.arch':'Architecture review','tech.audit':'Code audit','tech.mentor':'Team mentoring',
+    'tech.themes':'Custom themes','tech.plugins':'Plugin dev',
+    'tech.mobile':'Mobile-first','tech.perf':'Performance','tech.local':'Local context',
+    'tech.audit2':'Audit','tech.refactor':'Refactoring','tech.migration':'Migration','tech.docs':'Documentation',
+    'stack.tag':'03 — My Stack','stack.title':'Tools I build<br /><em>with today</em>',
+    'stack.focus.title':'Primary focus: MERN Stack',
+    'stack.focus.desc':'My current direction is the React ecosystem — from frontend UI to Node/Express APIs, MongoDB data layers, and deployment on modern cloud infrastructure. This is where I build the deepest expertise, and where I do my best work today.',
+    'stack.col.frontend':'Frontend','stack.col.backend':'Backend','stack.col.data':'Data & Infra','stack.col.platforms':'Platforms & Tools',
+    'level.core':'Core','level.core2':'Core','level.core3':'Core','level.core4':'Core','level.core5':'Core','level.core6':'Core','level.core7':'Core','level.core8':'Core',
+    'level.solid':'Solid','level.solid2':'Solid','level.solid3':'Solid','level.solid4':'Solid','level.solid5':'Solid','level.solid6':'Solid','level.solid7':'Solid','level.solid8':'Solid','level.solid9':'Solid','level.solid10':'Solid',
+    'level.growing':'Growing','stack.wp':'WordPress (dev)',
+    'stack.wp.note':'<strong>A note on WordPress:</strong> I build custom themes from scratch and architect plugins with real business logic — not off-the-shelf customisation. Custom post types, REST API extensions, WooCommerce flows, performance engineering. If your WordPress project is technically demanding, we\'ll work well together.',
+    'projects.tag':'04 — Work','projects.title':'Problems I\'ve<br /><em>already solved</em>',
+    'project.soon':'Screenshot coming soon','project.live':'↗ Live demo','project.visit':'↗ Visit','project.visit2':'↗ Visit','project.visit3':'↗ Visit','project.nda':'🔒 Under NDA','project.private':'🔒 Private',
+    'p1.outcome':'✦ Built from scratch — 0 to live product','p1.desc':'Designed and shipped a fintech platform for the African market — full ownership of architecture, development, and deployment. A real product solving a real problem.',
+    'p2.outcome':'✦ Bridged two complex systems without breaking either','p2.desc':'Custom two-way integration between Zvelt and QuickBooks. Real-time financial sync, edge case handling, zero data loss. The kind of feature that sounds simple and isn\'t.',
+    'p3.outcome':'✦ International team, high-stakes public delivery','p3.title':'City of Brossard — Municipal Portal','p3.desc':'Digital portal for the City of Brossard (Québec) — citizen services, online municipal management, information systems. Cross-border collaboration, demanding client standards.',
+    'p4.outcome':'✦ Full-stack ownership — back-office to UI','p4.desc':'Complete back-office and NuxtJS front-office for a Beninese digital infrastructure platform. From data architecture to polished interfaces.',
+    'p5.outcome':'✦ Optimised for African mobile healthcare contexts','p5.desc':'Frontend architecture for a telemedicine platform built for African healthcare realities. Mobile-first, lightweight, designed for variable connectivity conditions.',
+    'p6.outcome':'✦ Advanced WP dev beyond what plugins could handle','p6.title':'French E-commerce — Custom WP','p6.desc':'Bespoke WordPress features — custom purchase flows, payment gateway, live chat, long-term maintenance. Not config work. Engineering.',
+    'exp.tag':'05 — Track Record','exp.title':'Where I\'ve<br /><em>made a difference</em>',
+    'exp.e1.role':'Independent Technical Partner','exp.e1.company':'Freelance — Remote Worldwide',
+    'exp.e1.i1':'<strong>Designed and shipped KODFI</strong> — a fintech platform for the African market, handled end-to-end from architecture to production deployment.',
+    'exp.e1.i2':'Advised INA-AFRICA NGO on their digital infrastructure and web presence.',
+    'exp.e1.i3':'Contributed to the redesign of the Aka-Elibrary digital library platform.',
+    'exp.e2.role':'Senior Fullstack Developer','exp.e2.company':'Intside — Hybrid',
+    'exp.e2.i1':'<strong>Solved a complex integration challenge</strong> — built a custom QuickBooks connector for zvelt.com, enabling real-time financial data sync across two distinct systems.',
+    'exp.e2.i2':'<strong>Delivered for an international client</strong> — contributed to the City of Brossard\'s (Canada) municipal portal in a distributed cross-border team.',
+    'exp.e2.i3':'Built advanced WordPress features beyond standard plugin capabilities for a French client.',
+    'exp.e2.i4':'Designed the frontend proposal for a diplomatic visa management system.',
+    'exp.e3.role':'Fullstack Developer & Team Lead','exp.e3.company':'Nautilus Technology — Hybrid, Bénin',
+    'exp.e3.i1':'<strong>Took ownership of multiple platforms</strong> — APIEx, ADN Benin, Xroad — delivering both backend architecture and polished frontend interfaces simultaneously.',
+    'exp.e3.i2':'<strong>Mentored junior developers</strong>, growing the team\'s technical capacity while maintaining delivery timelines.',
+    'exp.e4.role':'Frontend Developer & Tech Advisor','exp.e4.company':'TelemedAfrika — Cotonou, Bénin',
+    'exp.e4.i1':'<strong>Became the go-to technical voice</strong> for the company\'s digital decisions — well beyond the original frontend role.',
+    'exp.e4.i2':'Built the GeMed telemedicine frontend (Vue.js), optimised for African users on limited mobile connectivity.',
+    'exp.e5.role':'Web Developer / Web Master',
+    'exp.e5.i1':'WordPress development, technical client support, and digital visibility strategy. Where it all started.',
+    'niches.tag':'06 — Domains','niches.title':'Industries I build<br /><em>solutions for</em>',
+    'niches.lead':'I bring both technical depth and domain familiarity to these verticals — less time explaining context, faster decisions, better products.',
+    'niche.saas.name':'SaaS & Startups','niche.saas.desc':'Fast iteration, scalable architecture, and the discipline to make good technical decisions under pressure. I\'ve been the person who ships the MVP <em>and</em> the one who cleans it up six months later.',
+    'niche.immo.name':'Real Estate','niche.immo.desc':'Property listing platforms, search & filter UX, agent portals, CRM integrations. A sector where performance and trust signals directly affect conversion — I build with both in mind.','niche.immo.t1':'Listing platforms',
+    'niche.finance.name':'Finance & Fintech','niche.finance.desc':'From African mobile payment flows to Western accounting integrations. I understand financial data sensitivity, audit trails, and the precision required in fintech engineering.','niche.finance.t1':'Payment systems','niche.finance.t2':'Data integrity',
+    'niche.health.name':'Health & MedTech','niche.health.desc':'Telemedicine platforms, patient portals, appointment systems. I\'ve built for African healthcare constraints — mobile-first, low-bandwidth, high-stakes. I know what "reliable" means in this sector.','niche.health.t1':'Performance',
+    'niche.ngo.name':'NGO & Social Impact','niche.ngo.desc':'Organisations doing meaningful work deserve digital infrastructure that matches their ambition. I build efficient, maintainable solutions with an eye on budget realities — and I understand the African context deeply.','niche.ngo.t1':'Lean builds','niche.ngo.t2':'Accessibility',
+    'niche.ecom.name':'E-commerce & WooCommerce','niche.ecom.desc':'Custom WooCommerce development, checkout optimisation, product catalogue architecture, payment gateway integration. For businesses whose revenue depends on their cart not breaking at 2am.','niche.ecom.t1':'Custom plugins','niche.ecom.t2':'Payments','niche.ecom.t3':'Performance',
+    'niches.note':'Don\'t see your industry here? Most of what I do transfers across verticals. <a href="#contact">Tell me about your project</a> and we\'ll figure it out together.',
+    'testi.tag':'07 — Testimonials','testi.title':'In their<br /><em>own words</em>',
+    'testi.t1.text':'Orderic is a rare profile — technically excellent, deeply autonomous, and always thinking about the business outcome, not just the code. His work was precise and delivered ahead of schedule.',
+    'testi.t2.text':'Beyond his technical depth, what stood out was how he raised the whole team\'s level. He challenged architecture when needed, and made junior devs grow visibly.',
+    'testi.t3.text':'He understood our healthcare context immediately and delivered something that actually works for African users on mobile — something many developers with far more resources haven\'t gotten right.',
+    'testi.placeholder':'[ To be replaced with real quote ]','testi.placeholder2':'[ To be replaced with real quote ]','testi.placeholder3':'[ To be replaced with real quote ]',
+    'testi.cta':'✏️ Placeholders — real quotes from colleagues will replace these soon.',
+    'contact.tag':'08 — Work Together','contact.title':'Let\'s solve<br /><em>something real</em>',
+    'contact.avail':'Available for new projects',
+    'contact.p1':'If you have a product to build, a team that needs a senior technical voice, or a digital challenge you haven\'t found the right person for yet — let\'s talk.',
+    'contact.p2':'I work with startups, agencies, NGOs, and established businesses across Europe, Canada, the Americas, and Africa. I respond within 24 hours.',
+    'contact.gh':'Add your handle →','contact.li':'Add your profile →',
+    'join.title':'Are you a developer?',
+    'join.desc':'I occasionally bring in collaborators on projects that need extra hands — React devs, WordPress specialists, designers. If you\'re autonomous, serious, and want to work on real products, reach out.',
+    'join.cta':'Get in touch →',
+    'form.fname':'First name','form.fname.ph':'John','form.lname':'Last name','form.lname.ph':'Doe',
+    'form.email':'Email','form.subject':'What are you looking for?',
+    'form.subject.ph':'MVP build / Tech lead / WordPress / Consulting...',
+    'form.message':'Tell me more','form.message.ph':'Describe the challenge, timeline, and what success looks like for you...',
+    'form.submit':'Send Message →',
+    'footer.copy':'© 2025 Orderic Barnor · Digital Solutions Partner',
+    'footer.top':'Top ↑','footer.hire':'Work Together',
+    'alert.msg':'Message received! I will get back to you within 24 hours.'
+  },
+  fr: {
+    'nav.about':'À propos','nav.services':'Services','nav.stack':'Stack',
+    'nav.projects':'Projets','nav.domains':'Secteurs','nav.contact':'Travailler ensemble',
+    'hero.eyebrow':'Partenaire Solutions Digitales',
+    'hero.positioning':'Je ne me contente pas de coder —<br />je <strong>transforme votre vision produit en réalité.</strong>',
+    'hero.cta1':'Comment je peux vous aider →','hero.cta2':'Discutons',
+    'hero.stat1':'Ans d\'expérience','hero.stat2':'Continents servis',
+    'hero.stat3':'Produits livrés','hero.stat4':'100% Remote',
+    'about.tag':'01 — Qui je suis',
+    'about.title':'Au-delà du<br /><em>simple développeur</em>',
+    'about.p1':'Après <strong>10+ ans</strong> à construire des produits web — des plateformes fintech en Afrique de l\'Ouest aux portails municipaux au Canada — j\'ai appris quelque chose que peu de développeurs admettent : <em>le code n\'est jamais la partie difficile.</em>',
+    'about.p2':'Le vrai défi, c\'est comprendre ce dont une entreprise a réellement besoin, concevoir la bonne architecture pour y arriver, et livrer quelque chose qui fonctionne — sans micromanagement.',
+    'about.p3':'Je travaille comme <strong>partenaire technique</strong>, pas comme prestataire en attente de tickets. J\'apporte des idées, je remets en question les hypothèses quand c\'est nécessaire, et je construis avec une vision long terme. Quand le projet le demande, je dirige et coordonne une équipe.',
+    'about.p4':'Basé à <strong>Cotonou, Bénin</strong>. Disponible pour des clients en <strong>Europe, Canada, Amériques</strong> et partout en <strong>Afrique</strong>.',
+    'badge.solution':'Orienté résultats','badge.remote':'Remote-first','badge.agile':'Agilité',
+    'badge.lead':'Leadership tech','badge.mentor':'Mentorat',
+    'distinction.title':'Ce qui me distingue',
+    'distinction.d1.title':'Orienté impact','distinction.d1.desc':'Ce qui m\'intéresse, c\'est le problème que vous résolvez, pas juste la fonctionnalité demandée. Je pose des questions. Je pousse en arrière quand c\'est nécessaire.',
+    'distinction.d2.title':'Double expertise marché','distinction.d2.desc':'Je comprends les standards produit occidentaux et les réalités du marché africain. Je construis des solutions qui fonctionnent dans les deux contextes.',
+    'distinction.d3.title':'Totalement autonome','distinction.d3.desc':'Pas besoin de supervision. Je cadre, j\'exécute, je livre. Je communique de façon proactive quand quelque chose change.',
+    'distinction.d4.title':'Architecture avant tout','distinction.d4.desc':'Je pense en systèmes, pas en fichiers. Les décisions que je prends au début tiennent toujours six mois plus tard.',
+    'services.tag':'02 — Ce que je propose',
+    'services.title':'Là où j\'apporte<br /><em>le plus de valeur</em>',
+    'services.lead':'Pas une liste de technologies. Une liste de problèmes que je vous aide à résoudre.',
+    's1.title':'Développement produit, de bout en bout','s1.desc':'Vous avez une idée — ou un produit à moitié construit à sauver. Je conçois l\'architecture, construis l\'application fullstack et livre quelque chose de réel. Du MVP à la production.',
+    's2.title':'Partenariat technique & Conseil','s2.desc':'Votre équipe construit mais a besoin d\'un regard senior. Je m\'intègre comme tech lead — revue d\'architecture, mentorat, déblocage, et les décisions qui maintiennent le projet sur les rails.',
+    's3.title':'Applications React / MERN','s3.desc':'SPA, tableaux de bord, plateformes data, APIs — avec une stack MERN moderne. Architecture de composants propre, performante et maintenable. Du code dont je serais fier de transmettre les clés.',
+    's4.title':'WordPress — Thèmes, Plugins & Engineering','s4.desc':'Je construis WordPress depuis zéro — thèmes sur mesure, plugins architecturés pour une vraie logique métier, flux WooCommerce, intégration de paiement, extensions REST API. Pas de config. Du code.',
+    's5.title':'Stratégie digitale marché africain','s5.desc':'J\'aide les entreprises internationales à adapter leurs produits pour les marchés africains — UX mobile-first, optimisation faible bande passante, moyens de paiement locaux, interfaces culturellement adaptées.',
+    's6.title':'Rescue & Modernisation','s6.desc':'Vous avez hérité d\'une base de code qui vous freine ? J\'évalue ce qui existe, élague ce qui est inutile, et migre vers une stack moderne et maintenable — avec un minimum d\'interruption.',
+    'tech.arch':'Revue d\'architecture','tech.audit':'Audit de code','tech.mentor':'Mentorat équipe',
+    'tech.themes':'Thèmes sur mesure','tech.plugins':'Développement plugins',
+    'tech.mobile':'Mobile-first','tech.perf':'Performance','tech.local':'Contexte local',
+    'tech.audit2':'Audit','tech.refactor':'Refactoring','tech.migration':'Migration','tech.docs':'Documentation',
+    'stack.tag':'03 — Ma Stack','stack.title':'Les outils avec<br /><em>lesquels je construis</em>',
+    'stack.focus.title':'Focus principal : Stack MERN',
+    'stack.focus.desc':'Ma direction actuelle est l\'écosystème React — du frontend UI aux APIs Node/Express, couches MongoDB, et déploiement sur infrastructure cloud moderne. C\'est là que je construis l\'expertise la plus profonde, et que je produis mon meilleur travail aujourd\'hui.',
+    'stack.col.frontend':'Frontend','stack.col.backend':'Backend','stack.col.data':'Données & Infra','stack.col.platforms':'Plateformes & Outils',
+    'level.core':'Maîtrisé','level.core2':'Maîtrisé','level.core3':'Maîtrisé','level.core4':'Maîtrisé','level.core5':'Maîtrisé','level.core6':'Maîtrisé','level.core7':'Maîtrisé','level.core8':'Maîtrisé',
+    'level.solid':'Solide','level.solid2':'Solide','level.solid3':'Solide','level.solid4':'Solide','level.solid5':'Solide','level.solid6':'Solide','level.solid7':'Solide','level.solid8':'Solide','level.solid9':'Solide','level.solid10':'Solide',
+    'level.growing':'En progression','stack.wp':'WordPress (dev)',
+    'stack.wp.note':'<strong>Note sur WordPress :</strong> Je construis des thèmes sur mesure et j\'architecture des plugins avec une vraie logique métier — pas de personnalisation de template. Custom post types, extensions REST API, flux WooCommerce, optimisation des performances. Si votre projet WordPress est techniquement exigeant, on s\'entendra très bien.',
+    'projects.tag':'04 — Réalisations','projects.title':'Des problèmes que<br /><em>j\'ai déjà résolus</em>',
+    'project.soon':'Capture d\'écran à venir','project.live':'↗ Démo live','project.visit':'↗ Visiter','project.visit2':'↗ Visiter','project.visit3':'↗ Visiter','project.nda':'🔒 Sous NDA','project.private':'🔒 Privé',
+    'p1.outcome':'✦ Construit de zéro — du concept au produit live','p1.desc':'Conception et livraison d\'une plateforme fintech pour le marché africain — propriété complète de l\'architecture, du développement et du déploiement. Un vrai produit qui résout un vrai problème.',
+    'p2.outcome':'✦ Deux systèmes complexes connectés sans accroc','p2.desc':'Intégration bidirectionnelle personnalisée entre Zvelt et QuickBooks. Synchronisation financière en temps réel, gestion des cas limites, zéro perte de données.',
+    'p3.outcome':'✦ Équipe internationale, livraison publique critique','p3.title':'Ville de Brossard — Portail municipal','p3.desc':'Portail numérique pour la Ville de Brossard (Québec) — services aux citoyens, gestion municipale en ligne, systèmes d\'information. Collaboration transfrontalière, exigences client élevées.',
+    'p4.outcome':'✦ Ownership fullstack — back-office jusqu\'à l\'interface','p4.desc':'Développement complet du back-office et du front-office NuxtJS pour une plateforme d\'infrastructure numérique béninoise. De l\'architecture données aux interfaces finies.',
+    'p5.outcome':'✦ Optimisé pour la santé mobile africaine','p5.desc':'Architecture frontend d\'une plateforme de télémédecine conçue pour les réalités de la santé africaine. Mobile-first, léger, adapté aux conditions de connectivité variable.',
+    'p6.outcome':'✦ Développement WP avancé, au-delà des plugins standards','p6.title':'E-commerce français — WP sur mesure','p6.desc':'Fonctionnalités WordPress sur mesure — flux d\'achat personnalisé, passerelle de paiement, chat en direct, maintenance évolutive. Pas de configuration. De l\'ingénierie.',
+    'exp.tag':'05 — Parcours','exp.title':'Là où j\'ai<br /><em>fait la différence</em>',
+    'exp.e1.role':'Partenaire Technique Indépendant','exp.e1.company':'Freelance — Remote, Mondial',
+    'exp.e1.i1':'<strong>Conception et livraison de KODFI</strong> — une plateforme fintech pour le marché africain, gérée de bout en bout de l\'architecture au déploiement en production.',
+    'exp.e1.i2':'Conseil à l\'ONG INA-AFRICA sur leur infrastructure digitale et présence web.',
+    'exp.e1.i3':'Contribution à la refonte de la bibliothèque numérique Aka-Elibrary.',
+    'exp.e2.role':'Développeur Fullstack Senior','exp.e2.company':'Intside — Hybride',
+    'exp.e2.i1':'<strong>Résolution d\'un défi d\'intégration complexe</strong> — connecteur QuickBooks personnalisé pour zvelt.com, synchronisation financière en temps réel entre deux systèmes distincts.',
+    'exp.e2.i2':'<strong>Livraison pour un client international</strong> — contribution au portail municipal de la Ville de Brossard (Canada) au sein d\'une équipe distribuée transfrontalière.',
+    'exp.e2.i3':'Développement de fonctionnalités WordPress avancées au-delà des capacités standards pour un client français.',
+    'exp.e2.i4':'Conception du frontend d\'un système de gestion de visas diplomatiques.',
+    'exp.e3.role':'Développeur Fullstack & Tech Lead','exp.e3.company':'Nautilus Technology — Hybride, Bénin',
+    'exp.e3.i1':'<strong>Ownership sur plusieurs plateformes simultanées</strong> — APIEx, ADN Benin, Xroad — livraison de l\'architecture backend et des interfaces frontend.',
+    'exp.e3.i2':'<strong>Mentorat des développeurs juniors</strong>, développement de la capacité technique de l\'équipe tout en maintenant les délais de livraison.',
+    'exp.e4.role':'Développeur Frontend & Conseiller Technique','exp.e4.company':'TelemedAfrika — Cotonou, Bénin',
+    'exp.e4.i1':'<strong>Référent technique principal</strong> pour l\'ensemble des décisions numériques de l\'entreprise — bien au-delà du rôle frontend initial.',
+    'exp.e4.i2':'Développement du frontend de télémédecine GeMed (Vue.js), optimisé pour les utilisateurs africains sur mobile avec connectivité limitée.',
+    'exp.e5.role':'Développeur Web / Web Master',
+    'exp.e5.i1':'Développement WordPress, support technique client, stratégie de visibilité numérique. Là où tout a commencé.',
+    'niches.tag':'06 — Secteurs','niches.title':'Les industries pour<br /><em>lesquelles je construis</em>',
+    'niches.lead':'Je combine expertise technique et connaissance sectorielle sur ces domaines — moins de temps à expliquer le contexte, des décisions plus rapides, de meilleurs produits.',
+    'niche.saas.name':'SaaS & Startups','niche.saas.desc':'Itération rapide, architecture scalable, et la discipline pour prendre de bonnes décisions techniques sous pression. J\'ai été la personne qui livre le MVP <em>et</em> celle qui le nettoie six mois plus tard.',
+    'niche.immo.name':'Immobilier','niche.immo.desc':'Plateformes d\'annonces, UX de recherche & filtres, portails agents, intégrations CRM. Un secteur où la performance et les signaux de confiance impactent directement la conversion.','niche.immo.t1':'Plateformes d\'annonces',
+    'niche.finance.name':'Finance & Fintech','niche.finance.desc':'Des flux de paiement mobile africains aux intégrations comptables occidentales. Je comprends la sensibilité des données financières, les pistes d\'audit, et la précision requise en fintech.','niche.finance.t1':'Systèmes de paiement','niche.finance.t2':'Intégrité des données',
+    'niche.health.name':'Santé & MedTech','niche.health.desc':'Plateformes de télémédecine, portails patients, systèmes de rendez-vous. J\'ai construit pour les contraintes de la santé africaine — mobile-first, faible bande passante, haute criticité.','niche.health.t1':'Performance',
+    'niche.ngo.name':'ONG & Impact Social','niche.ngo.desc':'Les organisations à impact méritent une infrastructure digitale à la hauteur de leur ambition. Je construis des solutions efficaces et maintenables en tenant compte des réalités budgétaires — et je connais le contexte africain profondément.','niche.ngo.t1':'Builds légers','niche.ngo.t2':'Accessibilité',
+    'niche.ecom.name':'E-commerce & WooCommerce','niche.ecom.desc':'Développement WooCommerce sur mesure, optimisation du tunnel d\'achat, architecture catalogue, intégration de passerelles de paiement. Pour les entreprises dont le chiffre d\'affaires dépend d\'un panier qui ne tombe pas en panne à 2h du matin.','niche.ecom.t1':'Plugins sur mesure','niche.ecom.t2':'Paiements','niche.ecom.t3':'Performance',
+    'niches.note':'Votre secteur n\'est pas listé ? La plupart de ce que je fais se transfère entre les domaines. <a href="#contact">Parlez-moi de votre projet</a> et on trouvera ensemble la bonne approche.',
+    'testi.tag':'07 — Témoignages','testi.title':'Ce qu\'ils<br /><em>en disent</em>',
+    'testi.t1.text':'Orderic est un profil rare — techniquement excellent, profondément autonome, et toujours centré sur l\'impact business plutôt que sur le code en tant que tel. Son travail était précis et livré avant les délais.',
+    'testi.t2.text':'Au-delà de sa maîtrise technique, ce qui ressortait c\'est comment il a tiré toute l\'équipe vers le haut. Il remettait en question l\'architecture quand il le fallait, et les juniors progressaient visiblement.',
+    'testi.t3.text':'Il a compris notre contexte de santé immédiatement et a livré quelque chose qui fonctionne vraiment pour les utilisateurs africains sur mobile — ce que beaucoup de développeurs avec bien plus de moyens n\'ont pas réussi.',
+    'testi.placeholder':'[ À remplacer par un vrai témoignage ]','testi.placeholder2':'[ À remplacer par un vrai témoignage ]','testi.placeholder3':'[ À remplacer par un vrai témoignage ]',
+    'testi.cta':'✏️ Placeholders — de vrais témoignages les remplaceront prochainement.',
+    'contact.tag':'08 — Travaillons ensemble','contact.title':'Résolvons<br /><em>quelque chose de concret</em>',
+    'contact.avail':'Disponible pour de nouveaux projets',
+    'contact.p1':'Vous avez un produit à construire, une équipe qui a besoin d\'un regard senior, ou un défi digital pour lequel vous n\'avez pas encore trouvé la bonne personne — parlons-en.',
+    'contact.p2':'Je travaille avec des startups, agences, ONG et entreprises établies en Europe, Canada, Amériques et Afrique. Je réponds sous 24h.',
+    'contact.gh':'Ajoutez votre compte →','contact.li':'Ajoutez votre profil →',
+    'join.title':'Vous êtes développeur·se ?',
+    'join.desc':'Je fais parfois appel à des collaborateurs sur des projets qui nécessitent des renforts — devs React, spécialistes WordPress, designers. Si vous êtes autonome, sérieux·se et que vous voulez travailler sur de vrais produits, contactez-moi.',
+    'join.cta':'Prendre contact →',
+    'form.fname':'Prénom','form.fname.ph':'Jean','form.lname':'Nom','form.lname.ph':'Dupont',
+    'form.email':'Email','form.subject':'Que recherchez-vous ?',
+    'form.subject.ph':'MVP / Tech lead / WordPress / Consulting...',
+    'form.message':'Dites-m\'en plus','form.message.ph':'Décrivez le défi, les délais, et à quoi ressemble le succès pour vous...',
+    'form.submit':'Envoyer le message →',
+    'footer.copy':'© 2025 Orderic Barnor · Partenaire Solutions Digitales',
+    'footer.top':'Haut ↑','footer.hire':'Travailler ensemble',
+    'alert.msg':'Message reçu ! Je vous réponds sous 24h.'
+  }
+};
+
+/* ── I18N ENGINE ──────────────────────────────────── */
+let currentLang = localStorage.getItem('ob-lang') || 'en';
+
+function setLang(lang) {
+  if (lang === currentLang) return;
+  currentLang = lang;
+  localStorage.setItem('ob-lang', lang);
+  applyLang();
+}
+
+function applyLang() {
+  const t = T[currentLang];
+
+  // Toggle button states
+  document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+  document.getElementById('btn-fr').classList.toggle('active', currentLang === 'fr');
+
+  // html lang attribute
+  document.documentElement.lang = currentLang;
+
+  // Fade transition
+  document.body.classList.add('lang-switching');
+
+  setTimeout(() => {
+    // Translate all [data-i18n] elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // Translate placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (t[key] !== undefined) el.placeholder = t[key];
+    });
+
+    document.body.classList.remove('lang-switching');
+  }, 180);
+}
+
+/* ── NAV SCROLL ───────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── HAMBURGER ────────────────────────────────────── */
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('navLinks').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('navLinks').classList.remove('open');
+}
+
+/* ── SCROLL REVEAL ────────────────────────────────── */
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: 0.08 }
+);
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ── FORM ─────────────────────────────────────────── */
+function handleSubmit() {
+  alert(T[currentLang]['alert.msg']);
+}
+
+/* ── INIT ─────────────────────────────────────────── */
+// Apply saved language on load (without transition on first render)
+if (currentLang === 'fr') {
+  document.getElementById('btn-en').classList.remove('active');
+  document.getElementById('btn-fr').classList.add('active');
+  document.documentElement.lang = 'fr';
+  const t = T['fr'];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+}
+</script>
 </body>
 </html>
