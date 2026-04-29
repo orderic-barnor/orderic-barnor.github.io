@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orderic BARNOR — Visual Designer</title>
+  <meta name="description" content="Visual designer specialised in posters, flyers and print communication. Bold, purposeful, striking. Remote worldwide." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#F5F0E8;--bg2:#EDE7D9;--surface:#E8E0CE;
+      --ink:#0D0B08;--ink2:#2A2520;--muted:#9A8E7E;
+      --accent:#C1440E;--accent2:#E05520;
+      --border:rgba(13,11,8,0.1);
+      --r:4px;--mono:'DM Mono',monospace;--serif:'Cormorant Garamond',serif;--sans:'Syne',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;overflow-x:hidden}
+    a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent2)}
+    ::selection{background:var(--accent);color:#fff}
+    ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;transition:all .4s}
+    nav.scrolled{background:rgba(245,240,232,.95);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+    .nav-logo{font-family:var(--serif);font-size:1.35rem;font-weight:300;color:var(--ink);letter-spacing:.05em}
+    .nav-logo span{font-style:italic;color:var(--accent)}
+    .nav-right{display:flex;align-items:center;gap:2rem}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;transition:color .2s}
+    .nav-links a:hover{color:var(--ink)}
+    .profile-switch{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:100px;padding:.38rem 1rem;cursor:pointer;transition:all .25s;text-decoration:none;flex-shrink:0}
+    .profile-switch:hover{border-color:var(--ink);color:var(--ink);background:transparent}
+    .profile-switch-dot{width:6px;height:6px;border-radius:50%;background:#c9a84c;flex-shrink:0}
+    .lang-toggle{display:flex;align-items:center;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;border:1px solid var(--border);border-radius:4px;overflow:hidden;flex-shrink:0}
+    .lang-btn{padding:.32rem .65rem;cursor:pointer;color:var(--muted);background:transparent;border:none;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;transition:all .2s;line-height:1}
+    .lang-btn.active{background:var(--accent);color:#fff;font-weight:500}
+    .lang-btn:not(.active):hover{color:var(--ink)}
+    .lang-sep{color:var(--border);pointer-events:none;display:flex;align-items:center;font-size:.7rem}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .hamburger span{display:block;width:22px;height:1.5px;background:var(--ink);transition:.3s}
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+    /* HERO */
+    #hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+    .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 3rem 5rem 4rem;background:var(--ink);position:relative;overflow:hidden}
+    .hero-left-texture{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,255,255,.03) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,255,.03) 60px)}
+    .hero-eyebrow{font-family:var(--mono);font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;opacity:0;animation:fadeUp .6s .2s ease forwards;position:relative}
+    .hero-name{font-family:var(--serif);font-size:clamp(3.5rem,6vw,5.5rem);font-weight:700;line-height:.95;color:#fff;opacity:0;animation:fadeUp .7s .35s ease forwards;position:relative}
+    .hero-name em{font-style:italic;font-weight:300;color:rgba(255,255,255,.4);display:block;font-size:.55em;letter-spacing:.12em;margin-top:.5rem}
+    .hero-rule{width:48px;height:2px;background:var(--accent);margin:2rem 0;opacity:0;animation:fadeUp .6s .5s ease forwards;position:relative}
+    .hero-tagline{font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.45rem);font-style:italic;font-weight:300;color:rgba(255,255,255,.65);line-height:1.5;max-width:380px;opacity:0;animation:fadeUp .7s .65s ease forwards;position:relative}
+    .hero-tagline strong{color:#fff;font-style:normal;font-weight:400}
+    .hero-ctas{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .8s ease forwards;position:relative}
+    .btn-accent{padding:.85rem 2rem;background:var(--accent);color:#fff;font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:pointer;border-radius:var(--r);transition:all .25s;display:inline-block}
+    .btn-accent:hover{background:var(--accent2);transform:translateY(-2px);color:#fff}
+    .btn-ghost{padding:.85rem 2rem;background:transparent;color:rgba(255,255,255,.6);font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;border:1px solid rgba(255,255,255,.15);cursor:pointer;border-radius:var(--r);transition:all .25s;display:inline-block}
+    .btn-ghost:hover{border-color:rgba(255,255,255,.5);color:#fff;transform:translateY(-2px)}
+    .hero-right{background:var(--bg2);display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 4rem 5rem 3rem;gap:2rem;opacity:0;animation:fadeIn 1s .6s ease forwards}
+    .hero-stat-row{display:flex;align-items:flex-end;gap:.8rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+    .hero-stat-row:last-child{border-bottom:none;padding-bottom:0}
+    .hero-stat-num{font-family:var(--serif);font-size:3.5rem;font-weight:700;line-height:1;color:var(--accent)}
+    .hero-stat-text{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.4;padding-bottom:.4rem}
+
+    /* COMMON */
+    section{position:relative;z-index:1;padding:6rem 4rem}
+    .section-tag{font-family:var(--mono);font-size:.63rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem}
+    .section-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.05;color:var(--ink)}
+    .section-title em{font-style:italic;font-weight:300;color:var(--muted)}
+    .section-lead{margin-top:1rem;font-size:.95rem;color:var(--muted);max-width:560px;line-height:1.85}
+    .divider-accent{width:44px;height:2px;background:var(--accent);margin:1.4rem 0}
+    .container{max-width:1100px;margin:0 auto}
+
+    /* ABOUT */
+    #about{background:var(--bg)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+    .about-text p{color:var(--ink2);line-height:1.95;margin-bottom:1.2rem;font-size:.97rem}
+    .about-text p strong{color:var(--ink);font-weight:700}
+    .about-text p em{font-style:italic;color:var(--muted)}
+    .about-tools{margin-top:2rem}
+    .about-tools-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem}
+    .tools-list{display:flex;flex-wrap:wrap;gap:.5rem}
+    .tool-tag{font-family:var(--mono);font-size:.65rem;padding:.38rem .88rem;border:1px solid var(--border);border-radius:3px;color:var(--ink2);background:var(--bg2)}
+    .about-philosophy{background:var(--ink);border-radius:12px;padding:2.8rem}
+    .about-philosophy-title{font-family:var(--serif);font-size:1.5rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.9);margin-bottom:1.5rem;line-height:1.3}
+    .philosophy-item{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+    .philosophy-item:last-child{border-bottom:none}
+    .philosophy-num{font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.12em;padding-top:.2rem;min-width:24px}
+    .philosophy-text{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.7}
+    .philosophy-text strong{color:rgba(255,255,255,.9);font-weight:600}
+
+    /* ── WORK / GALLERY ──────────────────────────── */
+    #work{background:var(--bg2)}
+    .work-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+    .work-filters{display:flex;gap:.5rem;flex-wrap:wrap}
+    .filter-btn{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.38rem .9rem;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
+    .filter-btn.active,.filter-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+
+    /* Masonry grid */
+    .projects-masonry{columns:3;gap:1.5rem}
+    .project-item{break-inside:avoid;margin-bottom:1.5rem;position:relative;overflow:hidden;border-radius:6px;cursor:pointer;background:var(--surface)}
+    .project-item[data-hidden]{display:none}
+    .project-cover{width:100%;display:block;transition:transform .5s ease}
+    .project-item:hover .project-cover{transform:scale(1.04)}
+    .project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,11,8,.88) 0%,transparent 55%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem}
+    .project-item:hover .project-overlay{opacity:1}
+    .project-overlay-tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.3rem}
+    .project-overlay-title{font-family:var(--serif);font-size:1.2rem;color:#fff;font-weight:400;margin-bottom:.4rem}
+    .project-overlay-count{font-family:var(--mono);font-size:.58rem;color:rgba(255,255,255,.5);letter-spacing:.1em}
+
+    /* Placeholder when image missing */
+    .project-placeholder-tile{background:var(--surface);border:1px dashed var(--border);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1.5rem;text-align:center;min-height:200px}
+    .placeholder-icon{font-size:1.8rem;margin-bottom:.7rem;opacity:.35}
+    .placeholder-text{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+    /* ── LIGHTBOX ────────────────────────────────── */
+    .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(13,11,8,.96);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .3s ease}
+    .lightbox.open{opacity:1;pointer-events:all}
+
+    .lb-header{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+    .lb-meta{display:flex;flex-direction:column;gap:.2rem}
+    .lb-project-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+    .lb-project-title{font-family:var(--serif);font-size:1.3rem;color:#fff;font-weight:400}
+    .lb-controls{display:flex;align-items:center;gap:1.5rem}
+    .lb-counter{font-family:var(--mono);font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:.1em}
+    .lb-close{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);background:none;border:1px solid rgba(255,255,255,.12);border-radius:3px;padding:.4rem .9rem;cursor:pointer;transition:all .2s}
+    .lb-close:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+
+    .lb-stage{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:2rem}
+    .lb-img{max-height:100%;max-width:100%;object-fit:contain;border-radius:3px;transition:opacity .25s ease,transform .25s ease}
+    .lb-img.switching{opacity:0;transform:scale(.98)}
+
+    .lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(13,11,8,.6);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:1.1rem;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;z-index:2;user-select:none}
+    .lb-arrow:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+    .lb-arrow.prev{left:1rem}
+    .lb-arrow.next{right:1rem}
+    .lb-arrow[disabled]{opacity:.2;pointer-events:none}
+
+    .lb-thumbs{display:flex;align-items:center;gap:.6rem;padding:1rem 2rem;border-top:1px solid rgba(255,255,255,.07);overflow-x:auto;flex-shrink:0}
+    .lb-thumbs::-webkit-scrollbar{height:2px}
+    .lb-thumbs::-webkit-scrollbar-thumb{background:var(--accent)}
+    .lb-thumb{width:56px;height:56px;object-fit:cover;border-radius:3px;cursor:pointer;opacity:.4;border:2px solid transparent;transition:all .2s;flex-shrink:0}
+    .lb-thumb.active{opacity:1;border-color:var(--accent)}
+    .lb-thumb:hover{opacity:.8}
+
+    /* SERVICES */
+    #services{background:var(--bg)}
+    .services-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;margin-top:3rem;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+    .service-item{padding:2.2rem;background:var(--bg);transition:background .25s;border-right:1px solid var(--border)}
+    .service-item:last-child{border-right:none}
+    .service-item:hover{background:var(--bg2)}
+    .service-item-num{font-family:var(--mono);font-size:.58rem;color:var(--accent);letter-spacing:.15em;margin-bottom:1.2rem}
+    .service-item-title{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--ink);margin-bottom:.8rem;line-height:1.2}
+    .service-item-desc{font-size:.85rem;color:var(--muted);line-height:1.8}
+
+    /* PROCESS */
+    #process{background:var(--ink)}
+    #process .section-tag{color:var(--accent)}
+    #process .section-title{color:#fff}
+    #process .section-title em{color:rgba(255,255,255,.3)}
+    .process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;margin-top:3rem}
+    .process-step{padding:2.5rem 2rem;border-right:1px solid rgba(255,255,255,.06)}
+    .process-step:last-child{border-right:none}
+    .process-step-num{font-family:var(--serif);font-size:4rem;font-weight:700;color:rgba(193,68,14,.15);line-height:1;margin-bottom:1rem}
+    .process-step-title{font-family:var(--sans);font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.7rem;letter-spacing:.03em}
+    .process-step-desc{font-size:.83rem;color:rgba(255,255,255,.4);line-height:1.75}
+
+    /* CONTACT */
+    #contact{background:var(--bg2)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+    .contact-left p{color:var(--ink2);line-height:1.9;font-size:.95rem;margin-bottom:1.5rem}
+    .contact-channels{display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem}
+    .channel{display:flex;align-items:center;gap:1rem;padding:.9rem 1.2rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;transition:all .25s}
+    .channel:hover{border-color:var(--accent);transform:translateX(4px)}
+    .channel-icon{color:var(--accent);font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+    .channel-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+    .channel-value{font-size:.88rem;color:var(--ink);margin-top:.1rem}
+    .avail-pill{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;color:#4a8c3f;background:rgba(74,140,63,.08);border:1px solid rgba(74,140,63,.2);border-radius:100px;padding:.35rem .9rem;margin-bottom:1.5rem}
+    .avail-dot{width:7px;height:7px;border-radius:50%;background:#4a8c3f;animation:pulse 2s infinite}
+    .contact-form{display:flex;flex-direction:column;gap:1.1rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:.45rem}
+    .form-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+    .form-input,.form-textarea{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:.8rem 1rem;color:var(--ink);font-family:var(--sans);font-size:.88rem;outline:none;transition:border-color .25s;resize:none}
+    .form-input:focus,.form-textarea:focus{border-color:var(--accent)}
+    .form-textarea{min-height:120px}
+    .form-submit{align-self:flex-start;padding:.88rem 2.4rem;background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;border-radius:var(--r);transition:all .25s}
+    .form-submit:hover{background:var(--accent2);transform:translateY(-2px)}
+
+    /* FOOTER */
+    footer{background:var(--ink);padding:2.5rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .footer-brand{font-family:var(--serif);font-size:1.1rem;color:rgba(255,255,255,.8)}
+    .footer-brand em{font-style:italic;color:var(--accent)}
+    .footer-copy{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.1em}
+    .footer-links{display:flex;gap:1.5rem}
+    .footer-links a{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+    .footer-links a:hover{color:var(--accent)}
+
+    /* REVEAL / ANIMATIONS */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:.12s}
+    .reveal-delay-2{transition-delay:.22s}
+    [data-i18n]{transition:opacity .18s ease}
+    body.lang-switching [data-i18n]{opacity:0}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+    @media(max-width:960px){
+      nav{padding:1.1rem 1.5rem}
+      .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(245,240,232,.98);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;z-index:99}
+      .nav-links.open{display:flex}
+      .nav-links a{font-size:1rem;color:var(--ink)}
+      .hamburger{display:flex}
+      #hero{grid-template-columns:1fr;min-height:auto}
+      .hero-left{padding:7rem 1.5rem 3rem}
+      .hero-right{padding:2rem 1.5rem 4rem;flex-direction:row;flex-wrap:wrap;gap:1.5rem}
+      .hero-stat-row{flex:1;min-width:120px;border-bottom:none;border-right:1px solid var(--border);padding-bottom:0;padding-right:1.5rem}
+      section{padding:4rem 1.5rem}
+      .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem}
+      .projects-masonry{columns:2}
+      .form-row{grid-template-columns:1fr}
+      footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}
+      .lb-thumbs{padding:.8rem 1rem}
+      .lb-stage{padding:1rem}
+    }
+    @media(max-width:560px){
+      .projects-masonry{columns:1}
+      .lb-arrow{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <div class="lb-header">
+    <div class="lb-meta">
+      <div class="lb-project-tag" id="lb-tag"></div>
+      <div class="lb-project-title" id="lb-title"></div>
+    </div>
+    <div class="lb-controls">
+      <div class="lb-counter" id="lb-counter"></div>
+      <button class="lb-close" onclick="closeLightbox()">✕ <span data-i18n="lb.close">Close</span></button>
+    </div>
+  </div>
+  <div class="lb-stage">
+    <button class="lb-arrow prev" id="lb-prev" onclick="lbNavigate(-1)">&#8592;</button>
+    <img class="lb-img" id="lb-img" src="" alt="" />
+    <button class="lb-arrow next" id="lb-next" onclick="lbNavigate(1)">&#8594;</button>
+  </div>
+  <div class="lb-thumbs" id="lb-thumbs"></div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Orderic <span>Barnor</span></div>
+  <div class="nav-right">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" onclick="closeMenu()" data-i18n="nav.about">About</a></li>
+      <li><a href="#work" onclick="closeMenu()" data-i18n="nav.work">Work</a></li>
+      <li><a href="#services" onclick="closeMenu()" data-i18n="nav.services">Services</a></li>
+      <li><a href="#contact" onclick="closeMenu()" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <a href="../index.html" class="profile-switch">
+      <span class="profile-switch-dot"></span>
+      <span data-i18n="nav.switch">Dev Profile →</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-sep">·</span>
+      <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-left-texture"></div>
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Visual Designer</p>
+    <h1 class="hero-name">Orderic<br /><em>BARNOR</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline" data-i18n="hero.tagline">Design is not decoration.<br />It's <strong>communication with intention.</strong></p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-accent" data-i18n="hero.cta1">See My Work →</a>
+      <a href="#contact" class="btn-ghost" data-i18n="hero.cta2">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-row">
+      <div class="hero-stat-num">10+</div>
+      <div class="hero-stat-text" data-i18n="hero.stat1">Years of<br />visual practice</div>
+    </div>
+    <div class="hero-stat-row">
+      <div class="hero-stat-num">∞</div>
+      <div class="hero-stat-text" data-i18n="hero.stat2">Posters &<br />print pieces</div>
+    </div>
+    <div class="hero-stat-row">
+      <div class="hero-stat-num">2</div>
+      <div class="hero-stat-text" data-i18n="hero.stat3">Skills in<br />one profile</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="section-tag" data-i18n="about.tag">01 — Approach</p>
+        <h2 class="section-title" data-i18n="about.title">Design that <em>speaks</em><br />before you read it</h2>
+        <div class="divider-accent"></div>
+        <p data-i18n="about.p1">My visual work started with <strong>posters and flyers</strong> — a discipline that teaches you one brutal truth: you have half a second to capture attention, or you've lost it.</p>
+        <p data-i18n="about.p2">That constraint shaped how I think about every design decision. Every element earns its place. Every visual choice carries meaning. Nothing is decoration for its own sake.</p>
+        <p data-i18n="about.p3">I'm expanding into other formats — <em>visual identity, digital design, editorial layouts</em> — but I bring the same rigour: communication first, aesthetics second, and always both.</p>
+        <p data-i18n="about.p4">Based in <strong>Cotonou, Bénin</strong>. Available for remote projects worldwide.</p>
+        <div class="about-tools">
+          <div class="about-tools-label" data-i18n="about.tools">Tools I use</div>
+          <div class="tools-list">
+            <span class="tool-tag">Adobe Photoshop</span>
+            <span class="tool-tag">Adobe Illustrator</span>
+            <span class="tool-tag">Canva Pro</span>
+            <span class="tool-tag">Figma</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-philosophy reveal reveal-delay-2">
+        <div class="about-philosophy-title" data-i18n="philosophy.title">What I believe about design</div>
+        <div class="philosophy-item"><div class="philosophy-num">01</div><div class="philosophy-text" data-i18n="philosophy.p1"><strong>Clarity over cleverness.</strong> The most beautiful design is one that is instantly understood.</div></div>
+        <div class="philosophy-item"><div class="philosophy-num">02</div><div class="philosophy-text" data-i18n="philosophy.p2"><strong>Context is everything.</strong> A poster for a Cotonou street wall and one for a Parisian gallery are not the same brief — even if they say the same words.</div></div>
+        <div class="philosophy-item"><div class="philosophy-num">03</div><div class="philosophy-text" data-i18n="philosophy.p3"><strong>Less is harder than more.</strong> Restraint takes skill. Anyone can fill a page.</div></div>
+        <div class="philosophy-item"><div class="philosophy-num">04</div><div class="philosophy-text" data-i18n="philosophy.p4"><strong>Good design is for someone.</strong> I always ask: who is this for, and what do we want them to feel?</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="container">
+    <div class="work-header reveal">
+      <div>
+        <p class="section-tag" data-i18n="work.tag">02 — Portfolio</p>
+        <h2 class="section-title" data-i18n="work.title">Selected <em>pieces</em></h2>
+      </div>
+      <div class="work-filters" id="filterBar">
+        <button class="filter-btn active" data-filter="all" data-i18n="filter.all">All</button>
+        <button class="filter-btn" data-filter="poster" data-i18n="filter.poster">Posters</button>
+        <button class="filter-btn" data-filter="flyer" data-i18n="filter.flyer">Flyers</button>
+      </div>
+    </div>
+    <!-- Grid generated by JS from PROJECTS config below -->
+    <div class="projects-masonry reveal" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <p class="section-tag reveal" data-i18n="services.tag">03 — Services</p>
+    <h2 class="section-title reveal" data-i18n="services.title">What I <em>design</em></h2>
+    <div class="divider-accent reveal"></div>
+    <div class="services-row reveal">
+      <div class="service-item"><div class="service-item-num">01</div><div class="service-item-title" data-i18n="s1.title">Posters & Print</div><div class="service-item-desc" data-i18n="s1.desc">Event posters, cultural communication, exhibition visuals. Designed to stop someone mid-step. Optimised for print and digital distribution.</div></div>
+      <div class="service-item"><div class="service-item-num">02</div><div class="service-item-title" data-i18n="s2.title">Flyers & Campaigns</div><div class="service-item-desc" data-i18n="s2.desc">Promotional flyers, event communication, series campaigns. Consistent visual language across multiple formats and touch points.</div></div>
+      <div class="service-item"><div class="service-item-num">03</div><div class="service-item-title" data-i18n="s3.title">Visual Identity</div><div class="service-item-desc" data-i18n="s3.desc">Logos, colour systems, typography — the building blocks of a coherent brand. Open to identity projects for businesses and events.</div></div>
+      <div class="service-item"><div class="service-item-num">04</div><div class="service-item-title" data-i18n="s4.title">Social Media Visuals</div><div class="service-item-desc" data-i18n="s4.desc">Formats adapted for Instagram, Facebook, LinkedIn — deliberate, not rushed. Templates your team can actually use.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <p class="section-tag reveal" data-i18n="process.tag">04 — How I Work</p>
+    <h2 class="section-title reveal" data-i18n="process.title">The process <em>behind</em><br />every piece</h2>
+    <div class="process-steps reveal">
+      <div class="process-step"><div class="process-step-num">01</div><div class="process-step-title" data-i18n="ps1.title">Brief & Context</div><div class="process-step-desc" data-i18n="ps1.desc">Understanding who you're talking to and what you want them to feel. No design without context.</div></div>
+      <div class="process-step"><div class="process-step-num">02</div><div class="process-step-title" data-i18n="ps2.title">Concept</div><div class="process-step-desc" data-i18n="ps2.desc">A visual direction before any execution. I align on concept before spending time on polish.</div></div>
+      <div class="process-step"><div class="process-step-num">03</div><div class="process-step-title" data-i18n="ps3.title">Execution</div><div class="process-step-desc" data-i18n="ps3.desc">Precision at every level — typography, spacing, colour, composition. The difference between good and remarkable is in the details.</div></div>
+      <div class="process-step"><div class="process-step-num">04</div><div class="process-step-title" data-i18n="ps4.title">Delivery</div><div class="process-step-desc" data-i18n="ps4.desc">Print-ready PDFs, web-optimised exports, source files if needed. Clean handoff.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="section-tag" data-i18n="contact.tag">05 — Let's work</p>
+        <h2 class="section-title" data-i18n="contact.title">Have a project<br /><em>in mind?</em></h2>
+        <div class="divider-accent"></div>
+        <div class="avail-pill"><div class="avail-dot"></div><span data-i18n="contact.avail">Open to new projects</span></div>
+        <p data-i18n="contact.p1">Whether it's a poster for an event, a flyer campaign, or a visual identity — I'd like to hear about it. I work with clients across Africa, Europe, and beyond.</p>
+        <div class="contact-channels">
+          <a href="mailto:barnororderic@gmail.com" class="channel"><span class="channel-icon">✉️</span><div><div class="channel-label">Email</div><div class="channel-value">barnororderic@gmail.com</div></div></a>
+          <a href="tel:+22901663253" class="channel"><span class="channel-icon">📞</span><div><div class="channel-label">Phone / WhatsApp</div><div class="channel-value">+229 01 66 32 53 53</div></div></a>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label" data-i18n="form.fname">First name</label><input class="form-input" type="text" data-i18n-ph="form.fname.ph" placeholder="John" /></div>
+          <div class="form-group"><label class="form-label" data-i18n="form.lname">Last name</label><input class="form-input" type="text" data-i18n-ph="form.lname.ph" placeholder="Doe" /></div>
+        </div>
+        <div class="form-group"><label class="form-label" data-i18n="form.email">Email</label><input class="form-input" type="email" placeholder="you@company.com" /></div>
+        <div class="form-group"><label class="form-label" data-i18n="form.project">Project type</label><input class="form-input" type="text" data-i18n-ph="form.project.ph" placeholder="Poster / Flyer / Identity / Other..." /></div>
+        <div class="form-group"><label class="form-label" data-i18n="form.message">Message</label><textarea class="form-textarea" data-i18n-ph="form.message.ph" placeholder="Describe your project, timeline, and expected output..."></textarea></div>
+        <button class="form-submit" onclick="handleSubmit()" data-i18n="form.submit">Send →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Orderic <em>Barnor</em></div>
+  <div class="footer-copy" data-i18n="footer.copy">© 2025 Orderic Barnor · Visual Designer</div>
+  <div class="footer-links">
+    <a href="#hero" data-i18n="footer.top">Top ↑</a>
+    <a href="../index.html" data-i18n="footer.dev">Dev Profile</a>
+    <a href="#contact" data-i18n="footer.contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════
+   ★  PROJECTS CONFIG — edit this to add projects
+   ════════════════════════════════════════════════
+   id      → folder name inside assets/img/
+   title   → displayed in lightbox & overlay
+   tag     → 'poster' | 'flyer' (used for filtering)
+   images  → number of images (1.jpg, 2.jpg, 3.jpg…)
+   ext     → file extension (default 'jpg')
+   ════════════════════════════════════════════════ */
+const PROJECTS = [
+  { id: 'project1', title: 'Project 1', tag: 'poster', images: 26 },
+  { id: 'project2', title: 'Project 2', tag: 'flyer',  images: 4 },
+  // { id: 'project3', title: 'Mon Affiche', tag: 'poster', images: 2 },
+  // Ajoute tes projets ici ↑
+];
+
+/* ── IMAGE PATH HELPER ─────────────────────────── */
+function imgPath(projectId, n, ext='png') {
+  return `../assets/img/${projectId}/image${n}.${ext}`;
+}
+
+/* ── BUILD GRID ────────────────────────────────── */
+function buildGrid() {
+  const grid = document.getElementById('projectsGrid');
+  grid.innerHTML = '';
+
+  if (PROJECTS.length === 0) {
+    grid.innerHTML = `<div class="project-placeholder-tile" style="column-span:all">
+      <div class="placeholder-icon">🖼️</div>
+      <div class="placeholder-text">Add your projects to the PROJECTS config in the script</div>
+    </div>`;
+    return;
+  }
+
+  PROJECTS.forEach((proj, idx) => {
+    const item = document.createElement('div');
+    item.className = 'project-item';
+    item.dataset.tag = proj.tag;
+    item.dataset.idx = idx;
+
+    const cover = imgPath(proj.id, 1, proj.ext || 'png');
+    const tagLabel = proj.tag === 'poster'
+      ? (currentLang === 'fr' ? 'Affiche' : 'Poster')
+      : (currentLang === 'fr' ? 'Flyer' : 'Flyer');
+
+    item.innerHTML = `
+      <img class="project-cover"
+           src="${cover}"
+           alt="${proj.title}"
+           onerror="this.closest('.project-item').innerHTML='<div class=\\'project-placeholder-tile\\'><div class=\\'placeholder-icon\\'>🖼️</div><div class=\\'placeholder-text\\'>${proj.id}</div></div>'" />
+      <div class="project-overlay">
+        <div class="project-overlay-tag">${tagLabel}</div>
+        <div class="project-overlay-title">${proj.title}</div>
+        <div class="project-overlay-count">${proj.images} ${currentLang === 'fr' ? 'image' : 'image'}${proj.images > 1 ? 's' : ''} →</div>
+      </div>`;
+
+    item.addEventListener('click', () => openLightbox(idx));
+    grid.appendChild(item);
+  });
+}
+
+/* ── FILTER ────────────────────────────────────── */
+document.getElementById('filterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  document.querySelectorAll('.project-item').forEach(item => {
+    item.dataset.hidden = (f !== 'all' && item.dataset.tag !== f) ? 'true' : '';
+    item.style.display = item.dataset.hidden ? 'none' : '';
+  });
+});
+
+/* ════════════════════════════════════════════════
+   LIGHTBOX
+   ════════════════════════════════════════════════ */
+let lbProjectIdx = 0;
+let lbImageIdx   = 0;
+
+function openLightbox(projectIdx, startImage = 0) {
+  lbProjectIdx = projectIdx;
+  lbImageIdx   = startImage;
+  const proj = PROJECTS[projectIdx];
+
+  document.getElementById('lb-tag').textContent   = proj.tag.charAt(0).toUpperCase() + proj.tag.slice(1);
+  document.getElementById('lb-title').textContent = proj.title;
+
+  buildThumbs(proj);
+  lbShowImage();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function buildThumbs(proj) {
+  const bar = document.getElementById('lb-thumbs');
+  bar.innerHTML = '';
+  for (let i = 1; i <= proj.images; i++) {
+    const thumb = document.createElement('img');
+    thumb.className = 'lb-thumb' + (i === 1 ? ' active' : '');
+    thumb.src = imgPath(proj.id, i, proj.ext || 'png');
+    thumb.alt = `${proj.title} — ${i}`;
+    thumb.dataset.n = i;
+    thumb.addEventListener('click', () => {
+      lbImageIdx = i - 1;
+      lbShowImage();
+    });
+    bar.appendChild(thumb);
+  }
+}
+
+function lbShowImage() {
+  const proj = PROJECTS[lbProjectIdx];
+  const n    = lbImageIdx + 1;
+  const img  = document.getElementById('lb-img');
+
+  // fade out
+  img.classList.add('switching');
+  setTimeout(() => {
+    img.src = imgPath(proj.id, n, proj.ext || 'png');
+    img.alt = `${proj.title} — ${n}`;
+    img.classList.remove('switching');
+  }, 220);
+
+  // counter
+  document.getElementById('lb-counter').textContent = `${n} / ${proj.images}`;
+
+  // arrows
+  document.getElementById('lb-prev').toggleAttribute('disabled', lbImageIdx === 0);
+  document.getElementById('lb-next').toggleAttribute('disabled', lbImageIdx === proj.images - 1);
+
+  // active thumb
+  document.querySelectorAll('.lb-thumb').forEach((t, i) => {
+    t.classList.toggle('active', i === lbImageIdx);
+  });
+  // scroll active thumb into view
+  const activeThumb = document.querySelector('.lb-thumb.active');
+  if (activeThumb) activeThumb.scrollIntoView({ inline: 'center', behavior: 'smooth' });
+}
+
+function lbNavigate(dir) {
+  const proj = PROJECTS[lbProjectIdx];
+  const next = lbImageIdx + dir;
+  if (next < 0 || next >= proj.images) return;
+  lbImageIdx = next;
+  lbShowImage();
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lbNavigate(1);
+  if (e.key === 'ArrowLeft')  lbNavigate(-1);
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+// Click outside image to close
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox') ||
+      e.target === document.querySelector('.lb-stage')) {
+    closeLightbox();
+  }
+});
+
+/* ════════════════════════════════════════════════
+   TRANSLATIONS
+   ════════════════════════════════════════════════ */
+const T = {
+  en: {
+    'nav.about':'About','nav.work':'Work','nav.services':'Services','nav.contact':'Contact','nav.switch':'Dev Profile →',
+    'hero.eyebrow':'Visual Designer',
+    'hero.tagline':'Design is not decoration.<br />It\'s <strong>communication with intention.</strong>',
+    'hero.cta1':'See My Work →','hero.cta2':'Get in Touch',
+    'hero.stat1':'Years of<br />visual practice','hero.stat2':'Posters &<br />print pieces','hero.stat3':'Skills in<br />one profile',
+    'about.tag':'01 — Approach','about.title':'Design that <em>speaks</em><br />before you read it',
+    'about.p1':'My visual work started with <strong>posters and flyers</strong> — a discipline that teaches you one brutal truth: you have half a second to capture attention, or you\'ve lost it.',
+    'about.p2':'That constraint shaped how I think about every design decision. Every element earns its place. Every visual choice carries meaning.',
+    'about.p3':'I\'m expanding into other formats — <em>visual identity, digital design, editorial layouts</em> — but I bring the same rigour: communication first, aesthetics second, and always both.',
+    'about.p4':'Based in <strong>Cotonou, Bénin</strong>. Available for remote projects worldwide.',
+    'about.tools':'Tools I use',
+    'philosophy.title':'What I believe about design',
+    'philosophy.p1':'<strong>Clarity over cleverness.</strong> The most beautiful design is one that is instantly understood.',
+    'philosophy.p2':'<strong>Context is everything.</strong> A poster for a Cotonou street wall and one for a Parisian gallery are not the same brief.',
+    'philosophy.p3':'<strong>Less is harder than more.</strong> Restraint takes skill. Anyone can fill a page.',
+    'philosophy.p4':'<strong>Good design is for someone.</strong> I always ask: who is this for, and what do we want them to feel?',
+    'work.tag':'02 — Portfolio','work.title':'Selected <em>pieces</em>',
+    'filter.all':'All','filter.poster':'Posters','filter.flyer':'Flyers',
+    'lb.close':'Close',
+    'services.tag':'03 — Services','services.title':'What I <em>design</em>',
+    's1.title':'Posters & Print','s1.desc':'Event posters, cultural communication, exhibition visuals. Designed to stop someone mid-step.',
+    's2.title':'Flyers & Campaigns','s2.desc':'Promotional flyers, event communication, series campaigns. Consistent visual language across formats.',
+    's3.title':'Visual Identity','s3.desc':'Logos, colour systems, typography — the building blocks of a coherent brand.',
+    's4.title':'Social Media Visuals','s4.desc':'Formats for Instagram, Facebook, LinkedIn — deliberate, not rushed.',
+    'process.tag':'04 — How I Work','process.title':'The process <em>behind</em><br />every piece',
+    'ps1.title':'Brief & Context','ps1.desc':'Understanding who you\'re talking to and what you want them to feel.',
+    'ps2.title':'Concept','ps2.desc':'A visual direction before any execution. I align on concept before spending time on polish.',
+    'ps3.title':'Execution','ps3.desc':'Precision at every level — typography, spacing, colour, composition.',
+    'ps4.title':'Delivery','ps4.desc':'Print-ready PDFs, web-optimised exports, source files if needed. Clean handoff.',
+    'contact.tag':'05 — Let\'s work','contact.title':'Have a project<br /><em>in mind?</em>',
+    'contact.avail':'Open to new projects',
+    'contact.p1':'Whether it\'s a poster, a flyer campaign, or a visual identity — I\'d like to hear about it.',
+    'form.fname':'First name','form.fname.ph':'John','form.lname':'Last name','form.lname.ph':'Doe',
+    'form.email':'Email','form.project':'Project type','form.project.ph':'Poster / Flyer / Identity / Other...',
+    'form.message':'Message','form.message.ph':'Describe your project, timeline, and expected output...',
+    'form.submit':'Send →',
+    'footer.copy':'© 2025 Orderic Barnor · Visual Designer','footer.top':'Top ↑','footer.dev':'Dev Profile','footer.contact':'Contact',
+    'alert.msg':'Message received! I\'ll get back to you shortly.'
+  },
+  fr: {
+    'nav.about':'À propos','nav.work':'Travaux','nav.services':'Services','nav.contact':'Contact','nav.switch':'Profil Dev →',
+    'hero.eyebrow':'Designer Graphique',
+    'hero.tagline':'Le design n\'est pas de la décoration.<br />C\'est de la <strong>communication avec intention.</strong>',
+    'hero.cta1':'Voir mes travaux →','hero.cta2':'Me contacter',
+    'hero.stat1':'Ans de<br />pratique visuelle','hero.stat2':'Affiches &<br />imprimés','hero.stat3':'Compétences<br />en un profil',
+    'about.tag':'01 — Approche','about.title':'Un design qui <em>parle</em><br />avant qu\'on le lise',
+    'about.p1':'Ma pratique visuelle a commencé avec les <strong>affiches et flyers</strong> — une discipline qui enseigne une vérité brutale : vous avez une demi-seconde pour capter l\'attention.',
+    'about.p2':'Cette contrainte a façonné chaque décision design. Chaque élément mérite sa place. Chaque choix visuel porte un sens.',
+    'about.p3':'Je m\'étends à d\'autres formats — <em>identité visuelle, design digital, mise en page</em> — avec la même rigueur : communication d\'abord, esthétique ensuite.',
+    'about.p4':'Basé à <strong>Cotonou, Bénin</strong>. Disponible pour des projets distants dans le monde entier.',
+    'about.tools':'Outils utilisés',
+    'philosophy.title':'Ce que je crois sur le design',
+    'philosophy.p1':'<strong>La clarté avant l\'astuce.</strong> Le plus beau design est celui qui est compris instantanément.',
+    'philosophy.p2':'<strong>Le contexte est tout.</strong> Une affiche pour un mur de rue à Cotonou et une pour une galerie parisienne ne sont pas le même brief.',
+    'philosophy.p3':'<strong>Moins, c\'est plus difficile que plus.</strong> La retenue demande de la maîtrise. N\'importe qui peut remplir une page.',
+    'philosophy.p4':'<strong>Un bon design s\'adresse à quelqu\'un.</strong> Je pose toujours la question : pour qui, et que veut-on qu\'ils ressentent ?',
+    'work.tag':'02 — Portfolio','work.title':'Pièces <em>sélectionnées</em>',
+    'filter.all':'Tout','filter.poster':'Affiches','filter.flyer':'Flyers',
+    'lb.close':'Fermer',
+    'services.tag':'03 — Services','services.title':'Ce que je <em>crée</em>',
+    's1.title':'Affiches & Imprimés','s1.desc':'Affiches événementielles, communication culturelle, visuels d\'exposition. Conçus pour stopper quelqu\'un dans sa course.',
+    's2.title':'Flyers & Campagnes','s2.desc':'Flyers promotionnels, communication événementielle, campagnes en série. Langage visuel cohérent sur plusieurs formats.',
+    's3.title':'Identité Visuelle','s3.desc':'Logos, systèmes de couleurs, typographie — les fondations d\'une marque cohérente.',
+    's4.title':'Visuels Réseaux Sociaux','s4.desc':'Formats pour Instagram, Facebook, LinkedIn — délibérés, pas précipités.',
+    'process.tag':'04 — Comment je travaille','process.title':'Le processus <em>derrière</em><br />chaque pièce',
+    'ps1.title':'Brief & Contexte','ps1.desc':'Comprendre à qui vous parlez et ce que vous voulez qu\'ils ressentent.',
+    'ps2.title':'Concept','ps2.desc':'Une direction visuelle avant toute exécution. Je m\'aligne sur le concept avant de passer au polish.',
+    'ps3.title':'Exécution','ps3.desc':'Précision à chaque niveau — typographie, espacement, couleur, composition.',
+    'ps4.title':'Livraison','ps4.desc':'PDFs prêts pour l\'impression, exports web optimisés, sources si besoin. Passation propre.',
+    'contact.tag':'05 — Travaillons','contact.title':'Vous avez un projet<br /><em>en tête ?</em>',
+    'contact.avail':'Disponible pour de nouveaux projets',
+    'contact.p1':'Que ce soit une affiche, une campagne de flyers, ou une identité visuelle — je serais ravi d\'en entendre parler.',
+    'form.fname':'Prénom','form.fname.ph':'Jean','form.lname':'Nom','form.lname.ph':'Dupont',
+    'form.email':'Email','form.project':'Type de projet','form.project.ph':'Affiche / Flyer / Identité / Autre...',
+    'form.message':'Message','form.message.ph':'Décrivez votre projet, les délais et le résultat attendu...',
+    'form.submit':'Envoyer →',
+    'footer.copy':'© 2025 Orderic Barnor · Designer Graphique','footer.top':'Haut ↑','footer.dev':'Profil Dev','footer.contact':'Contact',
+    'alert.msg':'Message reçu ! Je vous réponds rapidement.'
+  }
+};
+
+/* ── I18N ENGINE ───────────────────────────────── */
+let currentLang = localStorage.getItem('ob-lang') || 'en';
+
+function setLang(lang) {
+  if (lang === currentLang) return;
+  currentLang = lang;
+  localStorage.setItem('ob-lang', lang);
+  applyLang();
+  buildGrid(); // rebuild grid with updated labels
+}
+
+function applyLang() {
+  const t = T[currentLang];
+  document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+  document.getElementById('btn-fr').classList.toggle('active', currentLang === 'fr');
+  document.documentElement.lang = currentLang;
+  document.body.classList.add('lang-switching');
+  setTimeout(() => {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+      const key = el.getAttribute('data-i18n-ph');
+      if (t[key] !== undefined) el.placeholder = t[key];
+    });
+    document.body.classList.remove('lang-switching');
+  }, 180);
+}
+
+/* ── NAV / MISC ────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('navLinks').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('navLinks').classList.remove('open');
+}
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: 0.08 }
+);
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+function handleSubmit() { alert(T[currentLang]['alert.msg']); }
+
+/* ── INIT ──────────────────────────────────────── */
+buildGrid();
+if (currentLang === 'fr') {
+  document.getElementById('btn-en').classList.remove('active');
+  document.getElementById('btn-fr').classList.add('active');
+  document.documentElement.lang = 'fr';
+  const t = T['fr'];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+}
+</script>
+</body>
+</html>

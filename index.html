@@ -33,6 +33,11 @@
     .nav-links a{font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;transition:color .2s}
     .nav-links a:hover{color:var(--gold)}
 
+    /* PROFILE SWITCHER */
+    .profile-switch{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:100px;padding:.38rem 1rem;cursor:pointer;transition:all .25s;text-decoration:none;flex-shrink:0}
+    .profile-switch:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+    .profile-switch-dot{width:6px;height:6px;border-radius:50%;background:#C1440E;flex-shrink:0}
+
     /* LANG TOGGLE */
     .lang-toggle{display:flex;align-items:center;gap:0;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;border:1px solid var(--border);border-radius:4px;overflow:hidden;flex-shrink:0}
     .lang-btn{padding:.32rem .65rem;cursor:pointer;color:var(--muted);background:transparent;border:none;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;transition:all .2s;line-height:1}
@@ -267,6 +272,10 @@
       <li><a href="#niches" onclick="closeMenu()" data-i18n="nav.domains">Domains</a></li>
       <li><a href="#contact" onclick="closeMenu()" data-i18n="nav.contact">Work Together</a></li>
     </ul>
+    <a href="graphiste/index.html" class="profile-switch">
+      <span class="profile-switch-dot"></span>
+      <span data-i18n="nav.switch">Design Profile</span>
+    </a>
     <div class="lang-toggle">
       <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
       <span class="lang-sep">·</span>
@@ -773,6 +782,7 @@ const T = {
   en: {
     'nav.about':'About','nav.services':'Services','nav.stack':'Stack',
     'nav.projects':'Projects','nav.domains':'Domains','nav.contact':'Work Together',
+    'nav.switch':'Design Profile →',
     'hero.eyebrow':'Digital Solutions Partner',
     'hero.positioning':'I don\'t just write code —<br />I <strong>turn your product vision into a working reality.</strong>',
     'hero.cta1':'How I Can Help →','hero.cta2':'Let\'s Talk',
@@ -873,6 +883,7 @@ const T = {
   fr: {
     'nav.about':'À propos','nav.services':'Services','nav.stack':'Stack',
     'nav.projects':'Projets','nav.domains':'Secteurs','nav.contact':'Travailler ensemble',
+    'nav.switch':'Profil Design →',
     'hero.eyebrow':'Partenaire Solutions Digitales',
     'hero.positioning':'Je ne me contente pas de coder —<br />je <strong>transforme votre vision produit en réalité.</strong>',
     'hero.cta1':'Comment je peux vous aider →','hero.cta2':'Discutons',
