@@ -138,6 +138,7 @@
     .project-thumb{height:190px;display:flex;align-items:center;justify-content:center;position:relative}
     .project-thumb-placeholder{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;text-align:center}
     .project-thumb-placeholder span{display:block;font-size:2.2rem;margin-bottom:.5rem;opacity:.45}
+    .project-thumb-img{object-fit:cover;width: 100%;max-height: 100%;}
     .project-body{padding:1.8rem;flex:1;display:flex;flex-direction:column}
     .project-meta{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:.9rem}
     .project-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:.22rem .6rem;background:var(--gold-dim);border:1px solid var(--border);border-radius:3px;color:var(--gold);text-transform:uppercase}
@@ -528,7 +529,7 @@
     <div class="projects-grid">
       <div class="project-card reveal">
         <div class="project-thumb" style="background:linear-gradient(135deg,#0e0e0e,#1a1200)">
-          <div class="project-thumb-placeholder"><span>💳</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+          <img src="assets/img/kodfi.png" alt="KODFI" class="project-thumb-img">
         </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-tag">Fintech</span><span class="project-tag">Africa</span></div>
@@ -540,7 +541,7 @@
       </div>
       <div class="project-card reveal reveal-delay-1">
         <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a14,#001a0a)">
-          <div class="project-thumb-placeholder"><span>🔗</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+          <img src="assets/img/zvelt.png" alt="ZVELT" class="project-thumb-img">
         </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-tag">SaaS Integration</span><span class="project-tag">Laravel</span></div>
@@ -552,7 +553,7 @@
       </div>
       <div class="project-card reveal reveal-delay-2">
         <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a14,#14000a)">
-          <div class="project-thumb-placeholder"><span>🏙️</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+          <img src="assets/img/brossard.png" alt="Brossard" class="project-thumb-img">
         </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-tag">E-Government</span><span class="project-tag">Canada</span></div>
@@ -564,7 +565,7 @@
       </div>
       <div class="project-card reveal">
         <div class="project-thumb" style="background:linear-gradient(135deg,#0e0a00,#0a0e00)">
-          <div class="project-thumb-placeholder"><span>🚦</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+          <img src="assets/img/xroad.png" alt="XROAD" class="project-thumb-img">
         </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-tag">NuxtJS</span><span class="project-tag">Laravel</span><span class="project-tag">Bénin</span></div>
@@ -576,7 +577,7 @@
       </div>
       <div class="project-card reveal reveal-delay-1">
         <div class="project-thumb" style="background:linear-gradient(135deg,#001008,#000a10)">
-          <div class="project-thumb-placeholder"><span>🏥</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+          <img src="assets/img/gemed.png" alt="GEMED" class="project-thumb-img">
         </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-tag">HealthTech</span><span class="project-tag">Vue.js</span><span class="project-tag">Mobile-first</span></div>
@@ -588,10 +589,10 @@
       </div>
       <div class="project-card reveal reveal-delay-2">
         <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a0a,#0f0a14)">
-          <div class="project-thumb-placeholder"><span>🛒</span><span data-i18n="project.soon">Screenshot coming soon</span></div>
+          <img src="assets/img/jc.png" alt="Jacques-Cartier" class="project-thumb-img">
         </div>
         <div class="project-body">
-          <div class="project-meta"><span class="project-tag">WordPress</span><span class="project-tag">France</span><span class="project-tag">E-commerce</span></div>
+          <div class="project-meta"><span class="project-tag">WordPress</span><span class="project-tag">Québec</span><span class="project-tag">E-commerce</span></div>
           <div class="project-outcome" data-i18n="p6.outcome">✦ Advanced WP dev beyond what plugins could handle</div>
           <h3 class="project-title" data-i18n="p6.title">French E-commerce — Custom WP</h3>
           <p class="project-desc" data-i18n="p6.desc">Bespoke WordPress features — custom purchase flows, payment gateway, live chat, long-term maintenance. Not config work. Engineering.</p>

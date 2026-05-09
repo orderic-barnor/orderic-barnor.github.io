@@ -401,7 +401,7 @@
         <p class="section-tag" data-i18n="work.tag">02 — Portfolio</p>
         <h2 class="section-title" data-i18n="work.title">Selected <em>pieces</em></h2>
       </div>
-      <div class="work-filters" id="filterBar">
+      <div class="work-filters" id="filterBar" style="display: none;">
         <button class="filter-btn active" data-filter="all" data-i18n="filter.all">All</button>
         <button class="filter-btn" data-filter="poster" data-i18n="filter.poster">Posters</button>
         <button class="filter-btn" data-filter="flyer" data-i18n="filter.flyer">Flyers</button>
@@ -491,15 +491,15 @@
    ext     → file extension (default 'jpg')
    ════════════════════════════════════════════════ */
 const PROJECTS = [
-  { id: 'project1', title: 'Project 1', tag: 'poster', images: 3 },
-  { id: 'project2', title: 'Project 2', tag: 'flyer',  images: 4 },
-  // { id: 'project3', title: 'Mon Affiche', tag: 'poster', images: 2 },
-  // Ajoute tes projets ici ↑
+    { id: 'com_lba', title: "Communication Les Box d'Ameley", tag: 'poster', images: 26 },
+  // { id: 'com_lif', title: 'Communication Association Littérature Féminine LIF', tag: 'flyer',  images: 4 },
+  { id: 'com_sm', title: 'Communication Sweet Madame', tag: 'flyer',  images: 18 },
+
 ];
 
 /* ── IMAGE PATH HELPER ─────────────────────────── */
-function imgPath(projectId, n, ext='jpg') {
-  return `../assets/img/${projectId}/${n}.${ext}`;
+function imgPath(projectId, n, ext='png') {
+  return `../assets/img/${projectId}/image${n}.${ext}`;
 }
 
 /* ── BUILD GRID ────────────────────────────────── */
@@ -521,7 +521,8 @@ function buildGrid() {
     item.dataset.tag = proj.tag;
     item.dataset.idx = idx;
 
-    const cover = imgPath(proj.id, 1, proj.ext || 'jpg');
+    console.log(proj.id, 1, proj.ext || 'png');
+    const cover = imgPath(proj.id, 1, proj.ext || 'png');
     const tagLabel = proj.tag === 'poster'
       ? (currentLang === 'fr' ? 'Affiche' : 'Poster')
       : (currentLang === 'fr' ? 'Flyer' : 'Flyer');
@@ -534,7 +535,7 @@ function buildGrid() {
       <div class="project-overlay">
         <div class="project-overlay-tag">${tagLabel}</div>
         <div class="project-overlay-title">${proj.title}</div>
-        <div class="project-overlay-count">${proj.images} image${proj.images > 1 ? 's' : ''} →</div>
+        <div class="project-overlay-count">${proj.images} ${currentLang === 'fr' ? 'image' : 'image'}${proj.images > 1 ? 's' : ''} →</div>
       </div>`;
 
     item.addEventListener('click', () => openLightbox(idx));
@@ -586,12 +587,11 @@ function buildThumbs(proj) {
   for (let i = 1; i <= proj.images; i++) {
     const thumb = document.createElement('img');
     thumb.className = 'lb-thumb' + (i === 1 ? ' active' : '');
-    thumb.src = imgPath(proj.id, i, proj.ext || 'jpg');
+    thumb.src = imgPath(proj.id, i, proj.ext || 'png');
     thumb.alt = `${proj.title} — ${i}`;
     thumb.dataset.n = i;
-    const n = i;
     thumb.addEventListener('click', () => {
-      lbImageIdx = n - 1;
+      lbImageIdx = i - 1;
       lbShowImage();
     });
     bar.appendChild(thumb);
@@ -605,7 +605,7 @@ function lbShowImage() {
 
   img.classList.add('switching');
   setTimeout(() => {
-    img.src = imgPath(proj.id, n, proj.ext || 'jpg');
+    img.src = imgPath(proj.id, n, proj.ext || 'png');
     img.alt = `${proj.title} — ${n}`;
     img.classList.remove('switching');
   }, 220);
