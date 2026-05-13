@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Résidence Aitchedji · Droit d'usage 12 ans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F8F5F0;
+    --surface: #FFFFFF;
+    --text: #1A1916;
+    --text-muted: #6B6459;
+    --text-faint: #A09890;
+    --accent: #8A6E2F;
+    --accent-bg: #F5EDD8;
+    --border: rgba(26,25,22,0.10);
+    --border-strong: rgba(26,25,22,0.18);
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(248,245,240,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 12px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topbar-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+  .btn-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 0.5px solid rgba(138,110,47,0.3);
+    border-radius: 20px;
+    padding: 7px 18px;
+    cursor: pointer;
+    transition: opacity .15s;
+    text-decoration: none;
+  }
+  .btn-pdf:hover { opacity: .8; }
+  .btn-pdf svg { width: 14px; height: 14px; }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 780px; margin: 0 auto; padding: 56px 40px 80px; }
+
+  /* ── HEADER ── */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-strong);
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+  h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: .5rem;
+  }
+  h1 em {
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 28px;
+  }
+  .intro {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 580px;
+    line-height: 1.7;
+    margin-top: .75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── DIVIDER ── */
+  .divider { height: 0.5px; background: var(--border); margin: 2.5rem 0; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── METRICS ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+  .metric {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .metric-label { font-size: 11px; color: var(--text-faint); margin-bottom: 8px; }
+  .metric-value { font-size: 22px; font-weight: 500; color: var(--text); line-height: 1; }
+  .metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 5px; }
+
+  /* ── TWO COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title svg { color: var(--text-muted); flex-shrink: 0; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .check-item svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+
+  /* ── GALLERY ── */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 0;
+  }
+  .gallery-item {
+    aspect-ratio: 4/3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    background: #EDE8E0;
+    border: 0.5px solid var(--border);
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .3s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-faint);
+    font-size: 12px;
+  }
+  .gallery-placeholder svg { opacity: .4; }
+  .gallery-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .gallery-overlay.open { display: flex; }
+  .gallery-overlay img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: var(--radius);
+  }
+  .overlay-close {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    opacity: .7;
+    background: none;
+    border: none;
+    font-family: sans-serif;
+  }
+  .overlay-close:hover { opacity: 1; }
+  .overlay-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    opacity: .6;
+    padding: 12px;
+    font-family: sans-serif;
+  }
+  .overlay-nav:hover { opacity: 1; }
+  .overlay-prev { left: 16px; }
+  .overlay-next { right: 16px; }
+
+  /* ── PROJECTION ── */
+  .scen-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
+  .scen-tab {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-strong);
+    cursor: pointer;
+    background: var(--surface);
+    color: var(--text-muted);
+    transition: all .15s;
+  }
+  .scen-tab.active {
+    background: var(--accent-bg);
+    border-color: rgba(138,110,47,.4);
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .proj-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-muted);
+  }
+  .proj-row:last-of-type { border-bottom: none; }
+  .proj-row strong { color: var(--text); font-weight: 500; }
+  .highlight {
+    background: var(--accent-bg);
+    border: 0.5px solid rgba(138,110,47,.3);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .hl-label { font-size: 12px; color: var(--accent); font-weight: 500; }
+  .hl-sub { font-size: 11px; color: var(--accent); opacity: .7; margin-top: 3px; }
+  .hl-value { font-size: 22px; font-weight: 500; color: var(--accent); }
+
+  /* ── CONDITIONS ── */
+  .conditions {
+    font-size: 12px;
+    color: var(--text-faint);
+    line-height: 1.8;
+    border-top: 0.5px solid var(--border);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact-bar {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .contact-name { font-weight: 500; font-size: 15px; }
+  .contact-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+  .contact-link {
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    border: 0.5px solid rgba(138,110,47,.35);
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: var(--accent-bg);
+    transition: opacity .15s;
+  }
+  .contact-link:hover { opacity: .8; }
+
+  /* ── PRINT / PDF ── */
+  @media print {
+    .topbar, .btn-pdf, .scen-tabs, .gallery-overlay { display: none !important; }
+    body { background: white; }
+    .page { padding: 20px; }
+    .gallery { display: none; }
+    .gallery-print-note { display: block !important; }
+  }
+  .gallery-print-note {
+    display: none;
+    font-size: 12px;
+    color: var(--text-faint);
+    font-style: italic;
+    margin-top: .5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar" id="topbar">
+  <span class="topbar-title">Résidence Aitchedji, Calaví · Droit d'usage 12 ans</span>
+  <button class="btn-pdf" onclick="downloadPDF()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17v3a1 1 0 001 1h16a1 1 0 001-1v-3M16 6l-4-4-4 4"/></svg>
+    Télécharger PDF
+  </button>
+</div>
+
+<!-- MAIN CONTENT (this div is captured for PDF) -->
+<div id="pdf-content">
+<div class="page">
+
+  <!-- HEADER -->
+  <div>
+    <span class="badge">Opportunité d'investissement · Bénin</span>
+    <h1>Résidence meublée à Aitchedji, Calaví<br><em>Droit d'usage exclusif — 12 ans</em></h1>
+    <p class="intro">Obtenez une résidence prête à l'emploi dans un quartier calme de Calaví, avec possibilité de la confier à un service de gestion locative pour qu'elle génère des revenus en votre absence.</p>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Ticket d'entrée</div>
+      <div class="metric-value">25M</div>
+      <div class="metric-sub">FCFA · paiement unique</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Durée</div>
+      <div class="metric-value">12 ans</div>
+      <div class="metric-sub">droit d'usage complet</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Valeur du bien</div>
+      <div class="metric-value">60M+</div>
+      <div class="metric-sub">FCFA · estimation marché</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Retour potentiel</div>
+      <div class="metric-value">87M</div>
+      <div class="metric-sub">sur 12 ans (80% occ.)</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- LE BIEN -->
+  <p class="section-label">Le bien</p>
+  <div class="two-col" style="margin-bottom: 2.5rem;">
+    <div class="card">
+      <div class="card-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Composition
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        2 chambres avec douche privative
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Salon & cuisine moderne équipée
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Remise + garage
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Livré entièrement meublé
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-4.5-8-11.8a8 8 0 0116 0C20 16.5 12 21 12 21z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Localisation · Aitchedji
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Supermarchés & commerces à proximité
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Écoles & hôpitaux accessibles
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Quartier calme & résidentiel
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        À 230 m du goudron
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GALERIE -->
+  <p class="section-label">Photos du bien</p>
+
+  <div class="gallery" id="gallery">
+    <!--
+      POUR AJOUTER VOS PHOTOS :
+      Remplacez chaque bloc .gallery-item par :
+      <div class="gallery-item" onclick="openLightbox(0)">
+        <img src="photo1.jpg" alt="Salon">
+      </div>
+      Mettez vos photos dans le même dossier que ce fichier.
+      Changez le chiffre dans openLightbox() pour chaque image (0, 1, 2, 3...)
+    -->
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Photo à venir
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Photo à venir
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Photo à venir
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Photo à venir
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Photo à venir
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Photo à venir
+      </div>
+    </div>
+  </div>
+  <p class="gallery-print-note">Photos disponibles sur la version en ligne.</p>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTION -->
+  <p class="section-label">Projection locative</p>
+  <div class="scen-tabs">
+    <button class="scen-tab" onclick="setScen('low')" id="tab-low">Hypothèse basse · 50 %</button>
+    <button class="scen-tab active" onclick="setScen('high')" id="tab-high">Hypothèse réaliste · 80 %</button>
+  </div>
+  <div class="card" style="margin-bottom: 2.5rem;">
+    <div class="proj-row"><span>Tarif nuit (à partir de)</span><strong>25 000 FCFA</strong></div>
+    <div class="proj-row"><span>Taux d'occupation</span><strong id="occ">80 %</strong></div>
+    <div class="proj-row"><span>Revenu annuel brut</span><strong id="annual">7 300 000 FCFA</strong></div>
+    <div class="proj-row"><span>Revenu sur 12 ans</span><strong id="total">~87 600 000 FCFA</strong></div>
+    <div class="highlight">
+      <div>
+        <div class="hl-label">Récupération de mise</div>
+        <div class="hl-sub" id="hl-sub">les 8,6 années restantes = bénéfice net</div>
+      </div>
+      <div class="hl-value" id="payback">~3,4 ans</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GESTION LOCATIVE -->
+  <p class="section-label">Service de gestion locative (optionnel)</p>
+  <div class="card" style="margin-bottom: 2.5rem;">
+    <div class="card-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      Confié à notre service · 10 % des revenus locatifs
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px;">
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Mise en ligne & gestion des réservations
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Nettoyage inclus entre chaque séjour
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Suivi en temps réel via tableau de bord
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Disponible pour vos séjours personnels
+      </div>
+      <div class="check-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Transmission aux héritiers en cas de décès
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <p class="section-label">Contact</p>
+  <div class="contact-bar" style="margin-bottom: 2rem;">
+    <div>
+      <!--
+        REMPLACEZ PAR VOS INFORMATIONS :
+        - Votre nom complet
+        - Votre numéro WhatsApp
+      -->
+      <div class="contact-name">Orderic Barnor</div>
+      <div class="contact-sub">Gestionnaire du projet · Calaví, Bénin</div>
+    </div>
+    <!-- Remplacez XXXXXXXXXXX par votre numéro WhatsApp (format international sans +) -->
+    <a class="contact-link" href="https://wa.me/XXXXXXXXXXX">
+      Contacter sur WhatsApp
+    </a>
+  </div>
+
+  <!-- CONDITIONS -->
+  <div class="conditions">
+    Ce deal porte sur un <strong>droit d'usage exclusif de 12 ans</strong> — sans transfert de propriété. Le bien reste propriété de la famille. L'accord est formalisé par acte notarié. L'entretien courant est à la charge du titulaire du droit d'usage. En cas de décès, les héritiers désignés reprennent les droits dans les mêmes conditions jusqu'à terme. Les projections locatives sont indicatives et non garanties.
+  </div>
+
+</div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="gallery-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <button class="overlay-close" onclick="closeLightboxDirect()">&times;</button>
+  <button class="overlay-nav overlay-prev" onclick="navLightbox(-1, event)">&#8592;</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="overlay-nav overlay-next" onclick="navLightbox(1, event)">&#8594;</button>
+</div>
+
+<script>
+  /* ── SCENARIO TOGGLE ── */
+  function setScen(s) {
+    const isHigh = s === 'high';
+    document.getElementById('tab-low').classList.toggle('active', !isHigh);
+    document.getElementById('tab-high').classList.toggle('active', isHigh);
+    const rate = isHigh ? 0.8 : 0.5;
+    const annual = Math.round(25000 * 365 * rate);
+    const total = annual * 12;
+    const payback = (25000000 / annual).toFixed(1);
+    const remaining = (12 - parseFloat(payback)).toFixed(1);
+    document.getElementById('occ').textContent = (rate * 100) + ' %';
+    document.getElementById('annual').textContent = annual.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('total').textContent = '~' + total.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('payback').textContent = '~' + payback + ' ans';
+    document.getElementById('hl-sub').textContent = 'les ' + remaining + ' années restantes = bénéfice net';
+  }
+
+  /* ── LIGHTBOX ── */
+  const images = [];
+  let current = 0;
+
+  function buildImageList() {
+    document.querySelectorAll('#gallery .gallery-item img').forEach((img, i) => {
+      images.push(img.src);
+      img.parentElement.onclick = () => openLightbox(i);
+    });
+  }
+
+  function openLightbox(i) {
+    if (!images.length) return;
+    current = i;
+    document.getElementById('lightbox-img').src = images[current];
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  function closeLightbox(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightboxDirect();
+  }
+
+  function closeLightboxDirect() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  function navLightbox(dir, e) {
+    e.stopPropagation();
+    current = (current + dir + images.length) % images.length;
+    document.getElementById('lightbox-img').src = images[current];
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightboxDirect();
+    if (e.key === 'ArrowLeft') navLightbox(-1, e);
+    if (e.key === 'ArrowRight') navLightbox(1, e);
+  });
+
+  buildImageList();
+
+  /* ── PDF ── */
+  function downloadPDF() {
+    const el = document.getElementById('pdf-content');
+    const opt = {
+      margin: [10, 10, 10, 10],
+      filename: 'residence-aitchedji-investissement.pdf',
+      image: { type: 'jpeg', quality: 0.95 },
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#F8F5F0' },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['avoid-all', 'css'] }
+    };
+    document.getElementById('topbar').style.display = 'none';
+    document.querySelectorAll('.scen-tabs').forEach(el => el.style.display = 'none');
+    document.querySelector('.gallery').style.display = 'none';
+    document.querySelector('.gallery-print-note').style.display = 'block';
+    html2pdf().set(opt).from(el).save().then(() => {
+      document.getElementById('topbar').style.display = '';
+      document.querySelectorAll('.scen-tabs').forEach(el => el.style.display = '');
+      document.querySelector('.gallery').style.display = '';
+      document.querySelector('.gallery-print-note').style.display = 'none';
+    });
+  }
+</script>
+</body>
+</html>

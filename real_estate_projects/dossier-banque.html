@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dossier de Financement · Résidence Aitchedji</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F7F7F5; --surface: #FFFFFF; --text: #1A1A18; --text-muted: #616159;
+    --text-faint: #A0A098; --accent: #3D3D3A; --accent-bg: #EFEFEC;
+    --border: rgba(26,26,24,0.10); --border-strong: rgba(26,26,24,0.20);
+    --green: #1E6E44; --green-bg: #E5F3EC;
+    --radius: 10px; --radius-lg: 14px;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .topbar { position: sticky; top: 0; z-index: 100; background: rgba(247,247,245,0.92); backdrop-filter: blur(10px); border-bottom: 0.5px solid var(--border); padding: 12px 40px; display: flex; align-items: center; justify-content: space-between; }
+  .topbar-title { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+  .btn-pdf { display: inline-flex; align-items: center; gap: 7px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--accent); background: var(--accent-bg); border: 0.5px solid var(--border-strong); border-radius: 20px; padding: 7px 18px; cursor: pointer; transition: opacity .15s; text-decoration: none; }
+  .btn-pdf:hover { opacity: .7; }
+  .page { max-width: 780px; margin: 0 auto; padding: 56px 40px 80px; }
+  .badge { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; border: 0.5px solid var(--border-strong); color: var(--text-muted); margin-bottom: 1.5rem; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 34px; font-weight: 700; line-height: 1.2; color: var(--text); margin-bottom: .5rem; }
+  h1 em { font-weight: 400; font-style: italic; color: var(--text-muted); font-size: 26px; }
+  .intro { font-size: 15px; color: var(--text-muted); font-weight: 300; max-width: 580px; line-height: 1.7; margin-top: .75rem; margin-bottom: 2.5rem; }
+  .divider { height: 0.5px; background: var(--border); margin: 2.5rem 0; }
+  .section-label { font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1.25rem; }
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 2.5rem; }
+  .metric { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+  .metric-label { font-size: 11px; color: var(--text-faint); margin-bottom: 8px; }
+  .metric-value { font-size: 22px; font-weight: 500; color: var(--text); line-height: 1; }
+  .metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 5px; }
+  .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 22px 24px; }
+  .card-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .check-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px; }
+  .check-item svg { flex-shrink: 0; margin-top: 2px; color: var(--green); }
+  .table-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding: 10px 0; border-bottom: 0.5px solid var(--border); color: var(--text-muted); }
+  .table-row:last-of-type { border-bottom: none; }
+  .table-row strong { color: var(--text); font-weight: 500; }
+  .table-row.total { border-top: 1px solid var(--border-strong); border-bottom: none; margin-top: 4px; padding-top: 14px; font-weight: 500; color: var(--text); }
+  .table-row.total strong { font-size: 15px; }
+  .cashflow-box { background: var(--green-bg); border: 0.5px solid rgba(30,110,68,.25); border-radius: var(--radius); padding: 18px 20px; margin-top: 1rem; }
+  .cf-title { font-size: 12px; font-weight: 500; color: var(--green); margin-bottom: 12px; text-transform: uppercase; letter-spacing: .06em; }
+  .cf-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--green); padding: 5px 0; opacity: .85; }
+  .cf-row.net { opacity: 1; font-weight: 500; border-top: 0.5px solid rgba(30,110,68,.2); margin-top: 6px; padding-top: 10px; font-size: 15px; }
+  .slider-section { margin: 1.5rem 0; }
+  .slider-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+  .slider-label strong { color: var(--text); }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 2.5rem; }
+  .doc-list { list-style: none; }
+  .doc-list li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); padding: 8px 0; border-bottom: 0.5px solid var(--border); }
+  .doc-list li:last-child { border-bottom: none; }
+  .doc-list li svg { flex-shrink: 0; color: var(--text-faint); }
+  .conditions { font-size: 12px; color: var(--text-faint); line-height: 1.8; border-top: 0.5px solid var(--border); padding-top: 1.5rem; margin-top: 1.5rem; }
+  .contact-bar { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 22px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .contact-name { font-weight: 500; font-size: 15px; }
+  .contact-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+  @media print { .topbar, .slider-section, .gallery-overlay { display: none !important; } body { background: white; } }
+</style>
+</head>
+<body>
+<div class="topbar" id="topbar">
+  <span class="topbar-title">Dossier de financement · Résidence Aitchedji, Calaví</span>
+  <button class="btn-pdf" onclick="downloadPDF()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17v3a1 1 0 001 1h16a1 1 0 001-1v-3M16 6l-4-4-4 4"/></svg>
+    Télécharger PDF
+  </button>
+</div>
+
+<div id="pdf-content">
+<div class="page">
+
+  <span class="badge">Dossier de financement · Prêt immobilier</span>
+  <h1>Financement de finitions & aménagement<br><em>Résidence Aitchedji, Calaví — Bénin</em></h1>
+  <p class="intro">Demande de financement pour la réhabilitation et mise en location meublée d'un bien immobilier dont le gros œuvre est achevé depuis 8 ans. Le projet vise à activer un actif dormant à fort potentiel locatif.</p>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Montant sollicité</div><div class="metric-value">22M</div><div class="metric-sub">FCFA</div></div>
+    <div class="metric"><div class="metric-label">Durée souhaitée</div><div class="metric-value">10 ans</div><div class="metric-sub">remboursement mensuel</div></div>
+    <div class="metric"><div class="metric-label">Valeur du bien</div><div class="metric-value">60M+</div><div class="metric-sub">FCFA · estimation marché</div></div>
+    <div class="metric"><div class="metric-label">Revenu locatif estimé</div><div class="metric-value">5,5M</div><div class="metric-sub">FCFA/an · 60% occ.</div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRÉSENTATION DU BIEN -->
+  <p class="section-label">Le bien en garantie</p>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Composition actuelle</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Gros œuvre achevé (8 ans)</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>2 chambres avec douche prévue</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Salon & cuisine prévus</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Fondations portant R+2 minimum</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Remise & terrain résiduel</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-4.5-8-11.8a8 8 0 0116 0C20 16.5 12 21 12 21z"/><circle cx="12" cy="9" r="2.5"/></svg>Localisation · Aitchedji, Calaví</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Supermarchés & commerces à proximité</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Écoles & hôpitaux accessibles</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Quartier calme & résidentiel</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>À 230 m du goudron</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- UTILISATION DES FONDS -->
+  <p class="section-label">Utilisation des fonds</p>
+  <div class="card" style="margin-bottom:2.5rem">
+    <div class="table-row"><span>Finitions & aménagement intérieur RDC</span><strong>~15 000 000 FCFA</strong></div>
+    <div class="table-row"><span>Ameublement complet (location meublée)</span><strong>~4 000 000 FCFA</strong></div>
+    <div class="table-row"><span>Réserve travaux imprévus</span><strong>~2 000 000 FCFA</strong></div>
+    <div class="table-row"><span>Frais de mise en location (plateforme, photos)</span><strong>~500 000 FCFA</strong></div>
+    <div class="table-row"><span>Réserve trésorerie (3 mois)</span><strong>~500 000 FCFA</strong></div>
+    <div class="table-row total"><span>Total</span><strong>~22 000 000 FCFA</strong></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SIMULATION DE REMBOURSEMENT -->
+  <p class="section-label">Simulation de remboursement</p>
+  <div class="card" style="margin-bottom:2.5rem">
+    <div class="slider-section">
+      <div class="slider-label"><span>Taux annuel</span><strong id="rate-display">10 %</strong></div>
+      <input type="range" min="7" max="14" value="10" step="0.5" oninput="updateSim()" id="rate-slider">
+    </div>
+    <div class="slider-section">
+      <div class="slider-label"><span>Durée</span><strong id="duration-display">10 ans</strong></div>
+      <input type="range" min="5" max="15" value="10" step="1" oninput="updateSim()" id="duration-slider">
+    </div>
+    <div class="table-row"><span>Mensualité estimée</span><strong id="monthly">290 700 FCFA</strong></div>
+    <div class="table-row"><span>Revenu locatif mensuel estimé (60% occ.)</span><strong>~458 000 FCFA</strong></div>
+    <div class="cashflow-box">
+      <div class="cf-title">Cash-flow mensuel après remboursement</div>
+      <div class="cf-row"><span>Revenu locatif</span><span>+458 000 FCFA</span></div>
+      <div class="cf-row"><span>Mensualité banque</span><span id="cf-monthly">−290 700 FCFA</span></div>
+      <div class="cf-row net"><span>Solde mensuel net</span><span id="cf-net">+167 300 FCFA</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROFIL EMPRUNTEUR -->
+  <p class="section-label">Profil & garanties</p>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Porteur de projet</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Orderic Barnor · Développeur freelance</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Activité internationale (Europe)</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Service de gestion locative en cours de lancement</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Garanties proposées</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Hypothèque sur le bien (prop. familiale)</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Nantissement des revenus locatifs</div>
+      <div class="check-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Valeur bien (60M) >> montant prêt (22M)</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DOCUMENTS -->
+  <p class="section-label">Documents à fournir</p>
+  <div class="card" style="margin-bottom:2.5rem">
+    <ul class="doc-list">
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Titre foncier ou acte de propriété du terrain</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Pièce d'identité du propriétaire (père)</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Pièce d'identité du porteur de projet</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Relevés de compte (6 derniers mois)</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="20 6 9 17 4 12"/></svg>Justificatifs de revenus freelance (contrats, factures)</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Photos du bien actuel</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Estimation de la valeur vénale (expertise)</li>
+    </ul>
+  </div>
+
+  <p class="section-label">Contact</p>
+  <div class="contact-bar" style="margin-bottom:2rem">
+    <div><div class="contact-name" style="font-size:15px;font-weight:500">Orderic Barnor</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px">Porteur de projet · Calaví, Bénin</div></div>
+    <div style="font-size:13px;color:var(--text-muted)">+229 XX XX XX XX</div>
+  </div>
+
+  <div class="conditions">Les projections de revenus locatifs sont des estimations basées sur le marché local de la location meublée courte durée. Le taux d'occupation de 60% est retenu comme hypothèse prudente. Le bien est propriété familiale et toute hypothèque requiert l'accord formel du propriétaire. Les données financières de ce dossier sont fournies à titre informatif.</div>
+
+</div>
+</div>
+
+<script>
+  function pmt(rate, nper, pv) {
+    if (rate === 0) return pv / nper;
+    const r = rate / 12;
+    return pv * r * Math.pow(1+r, nper) / (Math.pow(1+r, nper) - 1);
+  }
+
+  function updateSim() {
+    const rate = parseFloat(document.getElementById('rate-slider').value) / 100;
+    const years = parseInt(document.getElementById('duration-slider').value);
+    document.getElementById('rate-display').textContent = (rate*100).toFixed(1) + ' %';
+    document.getElementById('duration-display').textContent = years + ' ans';
+    const monthly = Math.round(pmt(rate, years*12, 22000000));
+    const revenue = 458000;
+    const net = revenue - monthly;
+    document.getElementById('monthly').textContent = monthly.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('cf-monthly').textContent = '−' + monthly.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('cf-net').textContent = (net >= 0 ? '+' : '') + net.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('cf-net').style.color = net >= 0 ? 'var(--green)' : '#c0392b';
+  }
+
+  function downloadPDF(){
+    const el = document.getElementById('pdf-content');
+    const opt = {margin:[10,10,10,10], filename:'dossier-financement-aitchedji.pdf', image:{type:'jpeg',quality:0.95}, html2canvas:{scale:2,useCORS:true,backgroundColor:'#F7F7F5'}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}, pagebreak:{mode:['avoid-all','css']}};
+    document.getElementById('topbar').style.display='none';
+    document.querySelectorAll('.slider-section').forEach(el=>el.style.display='none');
+    html2pdf().set(opt).from(el).save().then(()=>{
+      document.getElementById('topbar').style.display='';
+      document.querySelectorAll('.slider-section').forEach(el=>el.style.display='');
+    });
+  }
+</script>
+</body>
+</html>

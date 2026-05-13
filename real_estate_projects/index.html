@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Résidence Aitchedji · Opportunités d'investissement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F8F5F0;
+    --surface: #FFFFFF;
+    --text: #1A1916;
+    --text-muted: #6B6459;
+    --text-faint: #A09890;
+    --border: rgba(26,25,22,0.10);
+    --border-strong: rgba(26,25,22,0.18);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+  /* HEADER */
+  header { max-width: 860px; margin: 0 auto; padding: 72px 40px 0; }
+  .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1rem; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 42px; font-weight: 700; line-height: 1.15; color: var(--text); margin-bottom: .75rem; }
+  h1 em { font-style: italic; font-weight: 400; color: var(--text-muted); }
+  .header-desc { font-size: 15px; color: var(--text-muted); font-weight: 300; max-width: 540px; line-height: 1.75; margin-bottom: 3rem; }
+  .header-divider { height: 0.5px; background: var(--border); margin-bottom: 3rem; }
+
+  /* STATS BAR */
+  .stats { display: flex; gap: 0; max-width: 860px; margin: 0 auto 3.5rem; padding: 0 40px; }
+  .stat { flex: 1; padding: 0 24px; border-right: 0.5px solid var(--border); }
+  .stat:first-child { padding-left: 0; }
+  .stat:last-child { border-right: none; }
+  .stat-value { font-size: 26px; font-weight: 500; color: var(--text); line-height: 1; margin-bottom: 5px; }
+  .stat-label { font-size: 12px; color: var(--text-faint); }
+
+  /* GRID */
+  .grid { max-width: 860px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 4rem; }
+
+  /* CARD */
+  .project-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow .2s, transform .2s; cursor: pointer; text-decoration: none; color: inherit; }
+  .project-card:hover { box-shadow: 0 8px 32px rgba(26,25,22,0.10); transform: translateY(-2px); }
+
+  .card-thumb { height: 160px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .card-thumb svg.bg-icon { width: 64px; height: 64px; opacity: .12; }
+  .card-thumb .pill { position: absolute; top: 12px; left: 12px; font-size: 10px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; background: rgba(255,255,255,0.85); backdrop-filter: blur(4px); }
+
+  /* card accent colors */
+  .card-gold .card-thumb { background: linear-gradient(135deg, #F5EDD8 0%, #EDD9A3 100%); }
+  .card-gold .card-thumb .pill { color: #8A6E2F; }
+  .card-gold .btn-cta { background: #F5EDD8; color: #8A6E2F; border-color: rgba(138,110,47,.3); }
+  .card-gold .btn-cta:hover { background: #EDD9A3; }
+
+  .card-blue .card-thumb { background: linear-gradient(135deg, #E8F0F7 0%, #BDD4EA 100%); }
+  .card-blue .card-thumb .pill { color: #2B5F8E; }
+  .card-blue .btn-cta { background: #E8F0F7; color: #2B5F8E; border-color: rgba(43,95,142,.3); }
+  .card-blue .btn-cta:hover { background: #BDD4EA; }
+
+  .card-green .card-thumb { background: linear-gradient(135deg, #E3F2F0 0%, #A8D9D2 100%); }
+  .card-green .card-thumb .pill { color: #1E7A6E; }
+  .card-green .btn-cta { background: #E3F2F0; color: #1E7A6E; border-color: rgba(30,122,110,.3); }
+  .card-green .btn-cta:hover { background: #A8D9D2; }
+
+  .card-body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; }
+  .card-label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+  .card-title { font-family: 'Libre Baskerville', serif; font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--text); margin-bottom: 10px; }
+  .card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; flex: 1; margin-bottom: 18px; }
+  .card-metrics { display: flex; gap: 16px; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 0.5px solid var(--border); }
+  .card-metric { }
+  .card-metric-value { font-size: 18px; font-weight: 500; color: var(--text); line-height: 1; }
+  .card-metric-label { font-size: 10px; color: var(--text-faint); margin-top: 3px; }
+  .btn-cta { display: flex; align-items: center; justify-content: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 10px 0; border-radius: var(--radius); border: 0.5px solid; transition: background .15s; }
+  .btn-cta svg { width: 13px; height: 13px; }
+
+  /* FOOTER */
+  footer { max-width: 860px; margin: 0 auto; padding: 0 40px 60px; display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid var(--border); padding-top: 2rem; }
+  .footer-name { font-weight: 500; font-size: 14px; color: var(--text); }
+  .footer-sub { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+  .footer-cta { font-size: 13px; color: var(--text-muted); text-decoration: none; border: 0.5px solid var(--border-strong); padding: 8px 18px; border-radius: 20px; background: var(--surface); transition: opacity .15s; }
+  .footer-cta:hover { opacity: .7; }
+
+  /* ILLUSTRATION ICONS IN THUMBS */
+  .thumb-rdc { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .thumb-rdc .floors { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .floor-block { height: 18px; border-radius: 4px; background: rgba(138,110,47,.25); }
+
+  .thumb-r1 { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .thumb-r1 .floors { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+
+  .thumb-pool { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Aitchedji, Calaví · Bénin</div>
+  <h1>Résidence Aitchedji<br><em>Trois opportunités d'investissement</em></h1>
+  <p class="header-desc">Des appartements de standing en droit d'usage sur 12 ans, dans une résidence bien située à Calaví. Chaque offre inclut un service de gestion locative optionnel pour générer des revenus en votre absence.</p>
+  <div class="header-divider"></div>
+</header>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-value">3</div>
+    <div class="stat-label">Opportunités disponibles</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">12 ans</div>
+    <div class="stat-label">Droit d'usage exclusif</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">60M+</div>
+    <div class="stat-label">Valeur estimée du bien</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">10 %</div>
+    <div class="stat-label">Commission gestion locative</div>
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- PROJET 1 : RDC -->
+  <a class="project-card card-gold" href="project1/index.html">
+    <div class="card-thumb">
+      <svg class="bg-icon" viewBox="0 0 24 24" fill="none" stroke="#8A6E2F" stroke-width="1"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M1 8l11-6 11 6"/><path d="M9 21V12h6v9"/></svg>
+      <span class="pill">Gros œuvre fait</span>
+    </div>
+    <div class="card-body">
+      <div class="card-label">Projet 1 · RDC</div>
+      <div class="card-title">Appartement 2 chambres — Rez-de-chaussée</div>
+      <p class="card-desc">Bien dont le gros œuvre est achevé. Livré meublé après finitions. Idéal en résidence secondaire ou en location courte durée.</p>
+      <div class="card-metrics">
+        <div class="card-metric">
+          <div class="card-metric-value">25M</div>
+          <div class="card-metric-label">FCFA ticket</div>
+        </div>
+        <div class="card-metric">
+          <div class="card-metric-value">~87M</div>
+          <div class="card-metric-label">potentiel 12 ans</div>
+        </div>
+        <div class="card-metric">
+          <div class="card-metric-value">~3,4 ans</div>
+          <div class="card-metric-label">récupération</div>
+        </div>
+      </div>
+      <div class="btn-cta">
+        Voir la fiche
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- PROJET 2 : R+1 -->
+  <a class="project-card card-blue" href="project2/index.html">
+    <div class="card-thumb">
+      <svg class="bg-icon" viewBox="0 0 24 24" fill="none" stroke="#2B5F8E" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+      <span class="pill">Neuf · clé en main</span>
+    </div>
+    <div class="card-body">
+      <div class="card-label">Projet 2 · R+1</div>
+      <div class="card-title">Appartement 3 pièces moderne — 1er étage</div>
+      <p class="card-desc">Appartement neuf au premier étage. Gros œuvre et finitions inclus dans le ticket. Parking privatif. Vue dégagée.</p>
+      <div class="card-metrics">
+        <div class="card-metric">
+          <div class="card-metric-value">40M</div>
+          <div class="card-metric-label">FCFA ticket</div>
+        </div>
+        <div class="card-metric">
+          <div class="card-metric-value">~92M</div>
+          <div class="card-metric-label">potentiel 12 ans</div>
+        </div>
+        <div class="card-metric">
+          <div class="card-metric-value">~5,2 ans</div>
+          <div class="card-metric-label">récupération</div>
+        </div>
+      </div>
+      <div class="btn-cta">
+        Voir la fiche
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- PROJET 3 : STUDIO + PISCINE -->
+  <a class="project-card card-green" href="project3/index.html">
+    <div class="card-thumb">
+      <svg class="bg-icon" viewBox="0 0 24 24" fill="none" stroke="#1E7A6E" stroke-width="1"><path d="M2 12h20M2 17c2-2 4 2 6 0s4-2 6 0 4 2 6 0M6 12V7a6 6 0 0112 0v5"/></svg>
+      <span class="pill">Exclusif · piscine</span>
+    </div>
+    <div class="card-body">
+      <div class="card-label">Projet 3 · Studio</div>
+      <div class="card-title">Studio standing + Piscine semi-couverte</div>
+      <p class="card-desc">Studio haut de gamme avec piscine privatisée. Double source de revenus : location du studio et location de la piscine à la journée.</p>
+      <div class="card-metrics">
+        <div class="card-metric">
+          <div class="card-metric-value">35M</div>
+          <div class="card-metric-label">FCFA ticket</div>
+        </div>
+        <div class="card-metric">
+          <div class="card-metric-value">~60M</div>
+          <div class="card-metric-label">potentiel 12 ans</div>
+        </div>
+        <div class="card-metric">
+          <div class="card-metric-value">~7,2 ans</div>
+          <div class="card-metric-label">récupération</div>
+        </div>
+      </div>
+      <div class="btn-cta">
+        Voir la fiche
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<footer>
+  <div>
+    <div class="footer-name">Orderic Barnor</div>
+    <div class="footer-sub">Gestionnaire du projet · Calaví, Bénin</div>
+  </div>
+  <!-- Remplacez XXXXXXXXXXX par votre numéro WhatsApp -->
+  <a class="footer-cta" href="https://wa.me/XXXXXXXXXXX">Contacter sur WhatsApp</a>
+</footer>
+
+</body>
+</html>
