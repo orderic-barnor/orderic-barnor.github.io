@@ -82,15 +82,72 @@
   .footer-cta { font-size: 13px; color: var(--text-muted); text-decoration: none; border: 0.5px solid var(--border-strong); padding: 8px 18px; border-radius: 20px; background: var(--surface); transition: opacity .15s; }
   .footer-cta:hover { opacity: .7; }
 
-  /* ILLUSTRATION ICONS IN THUMBS */
-  .thumb-rdc { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .thumb-rdc .floors { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .floor-block { height: 18px; border-radius: 4px; background: rgba(138,110,47,.25); }
+  /* =====================
+     RESPONSIVE — TABLET (≤ 700px)
+  ===================== */
+  @media (max-width: 700px) {
+    header { padding: 48px 24px 0; }
 
-  .thumb-r1 { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .thumb-r1 .floors { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    h1 { font-size: 30px; }
 
-  .thumb-pool { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .stats { padding: 0 24px; flex-wrap: wrap; }
+    .stat {
+      flex: 1 1 calc(50% - 1px); /* 2 colonnes */
+      padding: 12px 16px;
+      border-right: none;
+      border-bottom: 0.5px solid var(--border);
+    }
+    /* retire la bordure du bas sur les 2 derniers */
+    .stat:nth-child(3),
+    .stat:nth-child(4) { border-bottom: none; }
+    /* séparateur vertical entre les 2 colonnes */
+    .stat:nth-child(odd) { border-right: 0.5px solid var(--border); }
+
+    .grid {
+      grid-template-columns: 1fr 1fr;
+      padding: 0 24px;
+      gap: 12px;
+    }
+
+    footer { padding: 2rem 24px 48px; }
+  }
+
+  /* =====================
+     RESPONSIVE — MOBILE (≤ 480px)
+  ===================== */
+  @media (max-width: 480px) {
+    header { padding: 36px 20px 0; }
+
+    h1 { font-size: 26px; }
+    .header-desc { font-size: 14px; margin-bottom: 2rem; }
+
+    .stats { padding: 0 20px; margin-bottom: 2rem; }
+    .stat { flex: 1 1 100%; border-right: none; border-bottom: 0.5px solid var(--border); padding: 12px 0; }
+    .stat:last-child { border-bottom: none; }
+    .stat:nth-child(odd) { border-right: none; } /* reset du rule tablet */
+
+    .grid {
+      grid-template-columns: 1fr;
+      padding: 0 20px;
+    }
+
+    /* Sur mobile, les cards sont horizontales pour gagner de la place */
+    .project-card { flex-direction: row; }
+    .card-thumb { width: 110px; min-width: 110px; height: auto; flex-direction: column; }
+    .card-thumb .pill { font-size: 8px; padding: 3px 8px; }
+    .card-body { padding: 16px; }
+    .card-title { font-size: 15px; }
+    .card-metrics { gap: 10px; }
+    .card-metric-value { font-size: 15px; }
+
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 2rem 20px 40px;
+    }
+    .footer-cta { align-self: stretch; text-align: center; }
+  }
 </style>
 </head>
 <body>
@@ -188,7 +245,7 @@
   <!-- PROJET 3 : STUDIO + PISCINE -->
   <a class="project-card card-green" href="project3/index.html">
     <div class="card-thumb">
-      <svg class="bg-icon" viewBox="0 0 24 24" fill="none" stroke="#1E7A6E" stroke-width="1"><path d="M2 12h20M2 17c2-2 4 2 6 0s4-2 6 0 4 2 6 0M6 12V7a6 6 0 0112 0v5"/></svg>
+      <svg class="bg-icon" viewBox="0 0 24 24" fill="none" stroke="#1E7A6E" stroke-width="1"><path d="M2 12h20M2 17c2-2 4 2 6 0s4-2 6 0 4-2 6 0M6 12V7a6 6 0 0112 0v5"/></svg>
       <span class="pill">Exclusif · piscine</span>
     </div>
     <div class="card-body">
@@ -223,8 +280,7 @@
     <div class="footer-name">Orderic Barnor</div>
     <div class="footer-sub">Gestionnaire du projet · Calaví, Bénin</div>
   </div>
-  <!-- Remplacez XXXXXXXXXXX par votre numéro WhatsApp -->
-  <a class="footer-cta" href="https://wa.me/XXXXXXXXXXX">Contacter sur WhatsApp</a>
+  <a class="footer-cta" href="https://wa.me/22966325353">Contacter sur WhatsApp</a>
 </footer>
 
 </body>
